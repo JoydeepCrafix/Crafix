@@ -1,25 +1,27 @@
-# Crafix - Capture Moments & Sparkle ✨
+# Crafix - Capture Moments & Sparkle
 
-Welcome to the official website repository of **Crafix**!
+Welcome to the official repository of **Crafix**, a creative brand offering:
 
-Crafix is a creative brand offering:
-- 🎨 **@crafix.arts** – Custom Polaroids, photo gifts, designer envelopes, and memory keepsakes.
-- 💎 **@crafix.jewelleries** – Trendy, affordable jewellery including bracelets, earrings, necklaces, and charms.
+- **@crafix.arts** – Custom Polaroids, photo gifts, designer envelopes & more.
+- **@crafix.jewelleries** – Trendy, affordable jewelry: earrings, bracelets, charms, and more.
 
-This website is built using simple HTML and CSS, and hosted for free using GitHub Pages.
+## Website
 
-🌐 **Live Website**: [https://crafix.shop](https://crafix.shop)
+Visit our live website at: [www.crafix.shop](https://www.crafix.shop)
 
----
+## How to Order
 
-### 📦 What's inside?
-- `index.html` – The main website file
-- `crafixlogo.png` – The logo used in the header
+- DM us on Instagram:
+  - [@crafix.arts](https://instagram.com/crafix.arts)
+  - [@crafix.jewelleries](https://instagram.com/crafix.jewelleries)
+- Or email us: [crafix.arts@gmail.com](mailto:crafix.arts@gmail.com)
 
----
+## Built With
 
-### 📬 How to Contact Us
-- Instagram: [@crafix.arts](https://instagram.com/crafix.arts) | [@crafix.jewelleries](https://instagram.com/crafix.jewelleries)
-- Email: [crafix.arts@gmail.com](mailto:crafix.arts@gmail.com)
+- HTML5 + CSS3
+- Hosted using [GitHub Pages](https://pages.github.com)
+- Domain: [GoDaddy](https://godaddy.com)
 
-Thanks for visiting! 💖
+## License
+
+This project is open for inspiration but all content is © 2025 Crafix. Please do not copy without permission.
