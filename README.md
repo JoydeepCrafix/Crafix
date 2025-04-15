@@ -1,6 +1,6 @@
 # Crafix - Capture Moments & Sparkle
 
-Welcome to the official repository of **Crafix**, a creative brand offering:
+Welcome to the official website of **Crafix**, a creative brand offering:
 
 - **@crafix.arts** – Custom Polaroids, photo gifts, designer envelopes & more.
 - **@crafix.jewelleries** – Trendy, affordable jewelry: earrings, bracelets, charms, and more.
