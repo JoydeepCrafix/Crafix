@@ -16,12 +16,6 @@ Visit our live website at: [www.crafix.shop](https://www.crafix.shop)
   - [@crafix.jewelleries](https://instagram.com/crafix.jewelleries)
 - Or email us: [crafix.arts@gmail.com](mailto:crafix.arts@gmail.com)
 
-## Built With
-
-- HTML5 + CSS3
-- Hosted using [GitHub Pages](https://pages.github.com)
-- Domain: [GoDaddy](https://godaddy.com)
-
 ## License
 
 This project is open for inspiration but all content is © 2025 Crafix. Please do not copy without permission.
