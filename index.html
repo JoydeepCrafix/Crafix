@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Welcome to Crafix</title>
+  <link rel="icon" href="crafixlogo.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -55,9 +56,11 @@
       border-radius: 8px;
     }
     .testimonial {
-      background: #fff;
+      background: #ffffff;
       padding: 1rem;
       border-left: 4px solid #e91e63;
+      border-radius: 8px;
+      font-style: italic;
       margin-bottom: 1rem;
     }
     footer {
@@ -67,13 +70,32 @@
       padding: 1rem;
       margin-top: 3rem;
     }
+    a {
+      color: #e91e63;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      header h1 {
+        font-size: 1.5rem;
+        margin-top: 0.5rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <header style="background: #1a1a1a; padding: 1rem; display: flex; align-items: center;">
-    <img src="crafixlogo.png" alt="Crafix Logo" style="height: 60px; margin-right: 1rem;">
-    <h1 style="color: #e91e63; margin: 0;">Welcome to Crafix</h1>
+  <header>
+    <img src="crafixlogo.png" alt="Crafix Logo">
+    <h1>Welcome to Crafix</h1>
   </header>
+
   <div class="container">
     <p>Your one-stop destination for Polaroids, Jewellery & Custom Gifts.</p>
 
@@ -83,7 +105,7 @@
         <div class="product">
           <img src="polaroidpic.jpg" alt="Polaroids">
           <h3>📸 Polaroids</h3>
-          <p>Best for heartfelt gifts ❤️<br>Free envelope with 8+ pcs</p>
+          <p>Best for heartfelt gifts ❤️<br><strong style="color:#d5006e;">🎁 Free envelope</strong> with 8+ pcs</p>
         </div>
         <div class="product">
           <img src="pframe.jpg" alt="Photo Frame">
@@ -139,15 +161,19 @@
       <h2>Order Now 📦</h2>
       <p>We take orders via Instagram. Just DM us your product choices and details!</p>
       <p>📧 Email: crafix.arts@gmail.com<br>
-         📷 Instagram: <a href="https://instagram.com/crafix.arts">@crafix.arts</a> & <a href="https://instagram.com/crafix.jewelleries">@crafix.jewelleries</a>
+         📷 Instagram: <a href="https://instagram.com/crafix.arts" target="_blank">@crafix.arts</a> & <a href="https://instagram.com/crafix.jewelleries" target="_blank">@crafix.jewelleries</a>
       </p>
-      <button style="background:#e91e63;color:white;padding:10px 20px;border:none;border-radius:8px;margin-top:1rem;cursor:pointer;">Message to Order</button>
+      <a href="https://instagram.com/crafix.arts" target="_blank">
+        <button style="background:#e91e63;color:white;padding:10px 20px;border:none;border-radius:8px;margin-top:1rem;cursor:pointer;">
+          Message to Order
+        </button>
+      </a>
     </section>
   </div>
 
   <footer>
     <p>© 2025 Crafix. All rights reserved.</p>
-    <p><a href="#" style="color:white;">Crafix Arts</a> | <a href="#" style="color:white;">Crafix Jewelleries</a></p>
+    <p><a href="#">Crafix Arts</a> | <a href="#">Crafix Jewelleries</a></p>
   </footer>
 </body>
 </html>
