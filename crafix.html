@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Crafix</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background-color: #ffeef4;
+      color: #333;
+    }
+    header {
+      background: #1a1a1a;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    header img {
+      height: 60px;
+      margin-right: 1rem;
+    }
+    header h1 {
+      color: #e91e63;
+      margin: 0;
+    }
+    .container {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    h2 {
+      color: #e91e63;
+    }
+    .product-section {
+      margin-top: 3rem;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .product {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .product img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .testimonial {
+      background: #fff;
+      padding: 1rem;
+      border-left: 4px solid #e91e63;
+      margin-bottom: 1rem;
+    }
+    footer {
+      background: #1a1a1a;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <header style="background: #1a1a1a; padding: 1rem; display: flex; align-items: center;">
+    <img src="logo.png" alt="Crafix Logo" style="height: 60px; margin-right: 1rem;">
+    <h1 style="color: #e91e63; margin: 0;">Welcome to Crafix</h1>
+  </header>
+  <div class="container">
+    <p>Your one-stop destination for Polaroids, Jewellery & Custom Gifts.</p>
+
+    <section class="product-section">
+      <h2>Our Products – Crafix Arts 🎨</h2>
+      <div class="products">
+        <div class="product">
+          <img src="polaroid.jpg" alt="Polaroids">
+          <h3>📸 Polaroids</h3>
+          <p>Best for heartfelt gifts ❤️<br>Free envelope with 8+ pcs</p>
+        </div>
+        <div class="product">
+          <img src="photoframe.jpg" alt="Photo Frame">
+          <h3>🖼️ Photo Frames</h3>
+          <p>Affordable & personalized<br>Perfect for décor or gifts</p>
+        </div>
+        <div class="product">
+          <img src="album.jpg" alt="Photo Album">
+          <h3>📔 Custom Photo Albums</h3>
+          <p>Unique & made with care<br>Capture memories in style</p>
+        </div>
+        <div class="product">
+          <img src="notebook.jpg" alt="Spiral Notebook">
+          <h3>📚 Custom Notebooks</h3>
+          <p>Spiral bound | Custom covers</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-section">
+      <h2>Our Products – Crafix Jewelleries 💍</h2>
+      <div class="products">
+        <div class="product">
+          <img src="bracelet.jpg" alt="Beads Bracelet">
+          <h3>🪢 Beads Bracelets</h3>
+          <p>Custom starting @ ₹49<br>Beautiful charms & pendants!</p>
+        </div>
+        <div class="product">
+          <img src="earrings.jpg" alt="Metal Earrings">
+          <h3>✨ Metal Earrings</h3>
+          <p>Starts @ ₹20 🦋<br>High quality & lightweight</p>
+        </div>
+        <div class="product">
+          <img src="necklace.jpg" alt="Colorful Necklaces">
+          <h3>🌈 Colorful Necklaces</h3>
+          <p>Each just ₹49 💖<br>Daisy pendant + Rose gold chain</p>
+        </div>
+        <div class="product">
+          <img src="rose.jpg" alt="24K Rose">
+          <h3>🌹 24K Gold Plated Rose</h3>
+          <p>Perfect Valentine's gift 💝<br>Elegant metal rose design</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-section">
+      <h2>Customer Love 💌</h2>
+      <div class="testimonial">“Absolutely love the Polaroids and the cute packaging! Fast delivery too!” – Lily</div>
+      <div class="testimonial">“Bracelets are so pretty and exactly like the photo. 10/10 would recommend!” – Anushka</div>
+    </section>
+
+    <section class="product-section">
+      <h2>Order Now 📦</h2>
+      <p>We take orders via Instagram. Just DM us your product choices and details!</p>
+      <p>📧 Email: crafix.arts@gmail.com<br>
+         📷 Instagram: <a href="https://instagram.com/crafix.arts">@crafix.arts</a> & <a href="https://instagram.com/crafix.jewelleries">@crafix.jewelleries</a>
+      </p>
+      <button style="background:#e91e63;color:white;padding:10px 20px;border:none;border-radius:8px;margin-top:1rem;cursor:pointer;">Message to Order</button>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Crafix. All rights reserved.</p>
+    <p><a href="#" style="color:white;">Crafix Arts</a> | <a href="#" style="color:white;">Crafix Jewelleries</a></p>
+  </footer>
+</body>
+</html>
