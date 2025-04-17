@@ -5,9 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Crafix</title>
+  <link rel="icon" href="crafixlogo.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
     body {
       font-family: 'Nunito', sans-serif;
       background-color: #FAD0C9;
@@ -15,272 +19,348 @@
       overflow-x: hidden;
       transition: background-color 0.4s, color 0.4s;
     }
+
     body.dark-mode {
       background-color: #121212;
       color: #eee;
     }
-    section { display: none; min-height: 100vh; padding: 3rem 2rem; animation: fadeIn 1s ease; }
-    section.active { display: block; }
+
+    #theme-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeInModal 0.6s ease forwards;
+      opacity: 0;
+      background: rgba(18, 18, 18, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    @keyframes fadeInModal {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    #theme-modal .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 90%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    #theme-modal button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    #theme-modal .light-btn {
+      background: #FAD0C9;
+      color: #333;
+    }
+
+    #theme-modal .dark-btn {
+      background: #333;
+      color: white;
+    }
+
+    section {
+      display: none;
+      min-height: 100vh;
+      padding: 2rem;
+      animation: fadeIn 1s ease;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     header {
+      background-image: url('hero-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
-      flex-direction: column;
+      padding: 0 20px;
     }
+
     header img {
       width: 120px;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
+
     header h1 {
       font-size: 3rem;
       font-weight: 700;
       letter-spacing: 2px;
       min-height: 4rem;
     }
+
     .typing-animation::after {
       content: "|";
       animation: blink 0.7s infinite;
     }
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    header p {
+      font-size: 1.3rem;
+      margin-top: 1rem;
+    }
+
+    header a {
+      margin-top: 1.5rem;
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: #e91e63;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    header a:hover {
+      background-color: #d5006e;
+    }
+
+    .choose-section, .section-page {
+      text-align: center;
+    }
+
+    .choose-section h2, .section-page h2 {
+      font-size: 2.5rem;
+      color: #e91e63;
+      margin-bottom: 2rem;
+    }
+
+    .choose-section button, .back-btn {
+      background: #e91e63;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1rem;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .choose-section button:hover, .back-btn:hover {
+      background: #d5006e;
+    }
+
     .product-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 2rem;
+      gap: 1.5rem;
       justify-content: center;
+      margin-top: 2rem;
     }
+
     .product {
       background: white;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       width: 250px;
       overflow: hidden;
+      opacity: 0;
       transform: translateY(30px);
       animation: fadeInProduct 0.5s forwards;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .product:hover {
       transform: translateY(-10px) scale(1.03);
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
     }
+
     .product img {
       width: 100%;
       height: 180px;
       object-fit: cover;
       transition: transform 0.3s ease;
     }
+
     .product:hover img {
       transform: scale(1.1);
     }
-    .product h3, .product p {
-      margin: 0;
-      padding: 12px;
+
+    body.dark-mode .product {
+      background: #1f1f1f;
+      color: #fff;
     }
-    .choose-section, .section-page {
-      text-align: center;
-    }
-    .choose-section button, .back-btn {
-      background: #e91e63;
-      color: white;
-      padding: 12px 25px;
-      font-size: 1rem;
-      margin: 12px 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .choose-section button:hover, .back-btn:hover {
-      background: #d5006e;
-    }
-    #theme-modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-    #theme-modal .modal-content {
-      background: white;
-      padding: 3rem 2rem;
-      border-radius: 15px;
-      text-align: center;
-      max-width: 90%;
-    }
-    #theme-modal button {
-      margin: 12px 16px;
-      padding: 12px 28px;
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #theme-modal .light-btn { background: #FAD0C9; color: #333; }
-    #theme-modal .dark-btn { background: #333; color: white; }
+
     @keyframes fadeInProduct {
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
+
+    .product h3 {
+      background: #f8f8f8;
+      margin: 0;
+      padding: 10px;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .product p {
+      padding: 10px;
+      font-size: 0.95rem;
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .choose-section h2, .section-page h2 {
+        font-size: 1.8rem;
+      }
+
+      .choose-section button {
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
 
-<!-- Theme Selection Modal -->
-<div id="theme-modal">
-  <div class="modal-content">
-    <h2>Welcome to Crafix!</h2>
-    <p>Choose your preferred theme:</p>
-    <button class="light-btn" onclick="setTheme('light')">🌞 Light Mode</button>
-    <button class="dark-btn" onclick="setTheme('dark')">🌙 Dark Mode</button>
+  <!-- Theme Modal -->
+  <div id="theme-modal">
+    <div class="modal-content">
+      <h2>Welcome to Crafix!</h2>
+      <p>Choose your preferred theme:</p>
+      <button class="light-btn" onclick="setTheme('light')">🌞 Light Mode</button>
+      <button class="dark-btn" onclick="setTheme('dark')">🌙 Dark Mode</button>
+    </div>
   </div>
-</div>
 
-<!-- Page 1: Front Page -->
-<section id="front-page">
-  <header>
-    <img src="crafixlogo.png" alt="Crafix Logo">
-    <h1 class="typing-animation" id="typed-text"></h1>
-    <p>Your one-stop destination for arts and jewelry</p>
-    <a href="#" class="back-btn" onclick="goToPage('choose-page')">Explore Now</a>
-  </header>
-</section>
+  <!-- Front Page -->
+  <section id="front-page" class="active">
+    <header>
+      <div>
+        <img src="crafixlogo.png" alt="Crafix Logo" />
+        <h1 class="typing-animation" id="typed-text"></h1>
+        <p>Your one-stop destination for arts and jewelry</p>
+        <a href="#" onclick="goToPage('choose-page')">Explore Now</a>
+      </div>
+    </header>
+  </section>
 
-<!-- Page 2: Choose -->
-<section id="choose-page" class="choose-section">
+  <!-- Choose Page -->
+  <section id="choose-page" class="choose-section">
+    <h2>What would you like to explore?</h2>
+    <button onclick="showSection('arts')">🎨 Arts</button>
+    <button onclick="showSection('jewelleries')">💍 Jewelleries</button>
+    <br />
+    <button class="back-btn" onclick="goToPage('front-page')">⬅ Back</button>
+  </section>
 
-<h2>What would you like to explore?</h2>
-<div class="product-list" style="margin-top: 2rem;">
-  <div class="product" onclick="showSection('arts')">
-    <img src="pframe.jpg" alt="Arts">
-    <h3>🎨 Arts</h3>
-    <p>Explore our creative collection</p>
-  </div>
-  <div class="product" onclick="showSection('jewelleries')">
-    <img src="1.jpg" alt="Jewelleries">
-    <h3>💍 Jewelleries</h3>
-    <p>Discover elegant accessories</p>
-  </div>
-</div>
-<br>
-<button class="back-btn" onclick="goToPage('front-page')">⬅ Back</button>
+  <!-- Section Page -->
+  <section id="section-page" class="section-page">
+    <h2 id="section-title"></h2>
+    <div class="product-list" id="product-list"></div>
+    <br />
+    <button class="back-btn" onclick="goToPage('choose-page')">⬅ Back</button>
+  </section>
 
-</section>
+  <script>
+    const text = "Welcome to Crafix";
+    let i = 0;
 
-<!-- Page 3: Category Section -->
-<section id="section-page" class="section-page">
-  <h2 id="section-title" style="margin-bottom: 2rem;"></h2>
-  <div class="product-list" id="product-list"></div>
-  <br>
-  <button class="back-btn" onclick="goToPage('choose-page')">⬅ Back</button>
-</section>
-
-<!-- Page 4: Product Detail Section -->
-<section id="product-detail-page" class="section-page">
-  <h2 id="detail-title" style="margin-bottom: 2rem;"></h2>
-  <div class="product-list" id="detail-list"></div>
-  <br>
-  <button class="back-btn" onclick="goToPage('section-page')">⬅ Back</button>
-</section>
-
-<script>
-  const text = "Welcome to Crafix";
-  let i = 0;
-  function typeWriter() {
-    if (i < text.length) {
-      document.getElementById("typed-text").innerHTML += text.charAt(i);
-      i++;
-      setTimeout(typeWriter, 100);
+    function typeWriter() {
+      if (i < text.length) {
+        document.getElementById("typed-text").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 100);
+      }
     }
-  }
 
-  const data = {
-    arts: [
-      { img: "polaroidpic.jpg", title: "📸 Polaroids", desc: "Best for heartfelt gifts ❤️" },
-      { img: "pframe.jpg", title: "🖼️ Photo Frames", desc: "Affordable & personalized" },
-      { img: "dec7598c84facdaef2fe673d560d674e.jpg", title: "📔 Custom Photo Albums", desc: "Unique & made with care" },
-      { img: "Hf0d32efab6804bbb9f51a36fe9880f33M.jpg_720x720q50.avif", title: "📚 Custom Notebooks", desc: "Spiral bound | Custom covers" }
-    ],
-    jewelleries: [
-      { img: "1.jpg", title: "🪢 Beads Bracelets", desc: "Starting @ ₹19 with charms!" },
-      { img: "reha-1.jpg", title: "✨ Earrings", desc: "High quality & lightweight" },
-      { img: "d2d3943afb6139e9b571c12a1dbf5397.jpg", title: "🌈 Necklaces", desc: "Affordable & aesthetic" },
-      { img: "8bcb91b2.webp", title: "🌹 24K Gold Rose", desc: "Elegant and classy gift" }
-    ]
-  };
+    function goToPage(pageId) {
+      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+      document.getElementById(pageId).classList.add("active");
+    }
 
-  const detailData = {
-    "📸 Polaroids": [
-      { img: "polaroid1.jpg", title: "Polaroid A", price: "₹99" },
-      { img: "polaroid2.jpg", title: "Polaroid B", price: "₹129" }
-    ],
-    "🪢 Beads Bracelets": [
-      { img: "bracelet1.jpg", title: "Blue Beads", price: "₹19" },
-      { img: "bracelet2.jpg", title: "Charm Beads", price: "₹29" }
-    ],
-    "🖼️ Photo Frames": [
-      { img: "frame1.jpg", title: "Classic Frame", price: "₹199" },
-      { img: "frame2.jpg", title: "Wooden Frame", price: "₹249" }
-    ]
-  };
+    const data = {
+      arts: [
+        { img: "polaroidpic.jpg", title: "📸 Polaroids", desc: "Best for heartfelt gifts ❤️" },
+        { img: "pframe.jpg", title: "🖼️ Photo Frames", desc: "Affordable & personalized" },
+        { img: "dec7598c84facdaef2fe673d560d674e.jpg", title: "📔 Custom Photo Albums", desc: "Unique & made with care" },
+        { img: "Hf0d32efab6804bbb9f51a36fe9880f33M.jpg_720x720q50.avif", title: "📚 Custom Notebooks", desc: "Spiral bound | Custom covers" }
+      ],
+      jewelleries: [
+        { img: "1.jpg", title: "🪢 Beads Bracelets", desc: "Starting @ ₹19 with charms!" },
+        { img: "reha-1.jpg", title: "✨ Earrings", desc: "High quality & lightweight" },
+        { img: "d2d3943afb6139e9b571c12a1dbf5397.jpg", title: "🌈 Necklaces", desc: "Affordable & aesthetic" },
+        { img: "8bcb91b2-c540-4ede-8c55-f25161e2acec.c09d27ca2a17f49133f4f082273dcb2f.webp", title: "🌹 24K Gold Rose", desc: "Elegant and classy gift" }
+      ]
+    };
 
-  function setTheme(mode) {
-    document.body.classList.toggle('dark-mode', mode === 'dark');
-    document.getElementById("theme-modal").style.display = "none";
-    goToPage("front-page");
-    typeWriter();
-  }
+    function showSection(type) {
+      const products = data[type];
+      const list = document.getElementById("product-list");
+      const title = document.getElementById("section-title");
+      list.innerHTML = "";
+      title.textContent = type === "arts" ? "Crafix Arts Collection" : "Crafix Jewelleries Collection";
 
-  function goToPage(pageId) {
-    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-    document.getElementById(pageId).classList.add("active");
-  }
+      products.forEach((p, index) => {
+        const delay = index * 100;
+        list.innerHTML += `
+          <div class="product" style="animation-delay:${delay}ms">
+            <img src="${p.img}" alt="${p.title}">
+            <h3>${p.title}</h3>
+            <p>${p.desc}</p>
+          </div>
+        `;
+      });
 
-  function showSection(type) {
-    const list = document.getElementById("product-list");
-    const title = document.getElementById("section-title");
-    list.innerHTML = "";
-    title.textContent = type === "arts" ? "Crafix Arts Collection" : "Crafix Jewelleries Collection";
-    data[type].forEach((p, index) => {
-      const delay = index * 100;
-      list.innerHTML += `
-        <div class="product" style="animation-delay:${delay}ms" onclick="showDetail('${p.title}')">
-          <img src="${p.img}" alt="${p.title}">
-          <h3>${p.title}</h3>
-          <p>${p.desc}</p>
-        </div>
-      `;
-    });
-    goToPage("section-page");
-  }
+      goToPage("section-page");
+    }
 
-  function showDetail(title) {
-    const items = detailData[title] || [];
-    const detailList = document.getElementById("detail-list");
-    const detailTitle = document.getElementById("detail-title");
-    detailTitle.textContent = `${title} Collection`;
-    detailList.innerHTML = "";
-    items.forEach((item, index) => {
-      const delay = index * 100;
-      detailList.innerHTML += `
-        <div class="product" style="animation-delay:${delay}ms">
-          <img src="${item.img}" alt="${item.title}">
-          <h3>${item.title}</h3>
-          <p>Price: ${item.price}</p>
-        </div>
-      `;
-    });
-    goToPage("product-detail-page");
-  }
+    function setTheme(mode) {
+      document.body.classList.remove('dark-mode');
+      if (mode === 'dark') {
+        document.body.classList.add('dark-mode');
+      }
+      document.getElementById('theme-modal').style.display = 'none';
+      typeWriter(); // Start typing only after theme is chosen
+    }
 
-  window.onload = () => {
-    document.getElementById("theme-modal").style.display = "flex";
-  };
-</script>
+    window.onload = function () {
+      document.getElementById('theme-modal').style.display = 'flex';
+    };
+  </script>
 </body>
 </html>
