@@ -24,6 +24,46 @@
       color: #eee;
     }
 
+    #theme-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #theme-modal .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 90%;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    #theme-modal button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    #theme-modal .light-btn {
+      background: #FAD0C9;
+      color: #333;
+    }
+
+    #theme-modal .dark-btn {
+      background: #333;
+      color: white;
+    }
+
     section {
       display: none;
       min-height: 100vh;
@@ -106,7 +146,7 @@
       margin-bottom: 2rem;
     }
 
-    .choose-section button, .back-btn, .dark-toggle {
+    .choose-section button, .back-btn {
       background: #e91e63;
       color: white;
       padding: 12px 25px;
@@ -118,15 +158,8 @@
       transition: background 0.3s;
     }
 
-    .choose-section button:hover, .back-btn:hover, .dark-toggle:hover {
+    .choose-section button:hover, .back-btn:hover {
       background: #d5006e;
-    }
-
-    .dark-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 999;
     }
 
     .product-list {
@@ -197,7 +230,15 @@
 </head>
 <body>
 
-  <button class="dark-toggle" onclick="toggleDarkMode()">🌓 Toggle Mode</button>
+  <!-- Theme Modal -->
+  <div id="theme-modal">
+    <div class="modal-content">
+      <h2>Welcome to Crafix!</h2>
+      <p>Choose your preferred theme:</p>
+      <button class="light-btn" onclick="setTheme('light')">🌞 Light Mode</button>
+      <button class="dark-btn" onclick="setTheme('dark')">🌙 Dark Mode</button>
+    </div>
+  </div>
 
   <!-- Front Page -->
   <section id="front-page" class="active">
@@ -238,7 +279,6 @@
         setTimeout(typeWriter, 100);
       }
     }
-    window.onload = typeWriter;
 
     function goToPage(pageId) {
       document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
@@ -281,10 +321,24 @@
       goToPage("section-page");
     }
 
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
+    function setTheme(mode) {
+      if (mode === 'dark') {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+      localStorage.setItem('crafix-theme', mode);
+      document.getElementById('theme-modal').style.display = 'none';
     }
-  </script>
 
+    window.onload = function() {
+      typeWriter();
+      const savedTheme = localStorage.getItem('crafix-theme');
+      if (savedTheme) {
+        setTheme(savedTheme);
+        document.getElementById('theme-modal').style.display = 'none';
+      }
+    };
+  </script>
 </body>
 </html>
