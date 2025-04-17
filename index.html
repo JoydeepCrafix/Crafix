@@ -66,6 +66,18 @@
       font-size: 4rem;
       font-weight: 700;
       letter-spacing: 2px;
+      min-height: 5rem;
+    }
+
+    .typing-animation::after {
+      content: "|";
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
     }
 
     header p {
@@ -230,7 +242,7 @@
   <header>
     <div>
       <img src="crafixlogo.png" alt="Crafix Logo" />
-      <h1>Welcome to Crafix</h1>
+      <h1 class="typing-animation" id="typed-text"></h1>
       <p>Your one-stop destination for arts and jewelry</p>
       <a href="#arts">Explore Now</a>
     </div>
@@ -324,6 +336,7 @@
   </footer>
 
   <script>
+    // Scroll to Top Button
     window.onscroll = function () {
       let scrollButton = document.querySelector('.scroll-to-top');
       if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
@@ -337,6 +350,21 @@
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     }
+
+    // Typing Animation Script
+    const text = "Welcome to Crafix";
+    const speed = 100;
+    let i = 0;
+
+    function typeWriter() {
+      if (i < text.length) {
+        document.getElementById("typed-text").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+
+    window.onload = typeWriter;
   </script>
 </body>
 </html>
