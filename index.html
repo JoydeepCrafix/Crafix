@@ -28,11 +28,26 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 9999;
+      animation: fadeInModal 0.6s ease forwards;
+      opacity: 0;
+      background: rgba(18, 18, 18, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    @keyframes fadeInModal {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     #theme-modal .modal-content {
@@ -283,6 +298,7 @@
   <script>
     const text = "Welcome to Crafix";
     let i = 0;
+
     function typeWriter() {
       if (i < text.length) {
         document.getElementById("typed-text").innerHTML += text.charAt(i);
@@ -338,10 +354,10 @@
         document.body.classList.add('dark-mode');
       }
       document.getElementById('theme-modal').style.display = 'none';
+      typeWriter(); // Start typing only after theme is chosen
     }
 
     window.onload = function () {
-      typeWriter();
       document.getElementById('theme-modal').style.display = 'flex';
     };
   </script>
