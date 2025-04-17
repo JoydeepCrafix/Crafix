@@ -3,177 +3,331 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to Crafix</title>
+  <title>Crafix - Art & Jewelry</title>
   <link rel="icon" href="crafixlogo.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: 'Nunito', sans-serif;
-      background-color: #ffeef4;
+      background-color: #f4f4f4;
       color: #333;
     }
-    header {
-      background: #1a1a1a;
+
+    nav {
+      background-color: #e91e63;
       padding: 1rem;
-      display: flex;
-      align-items: center;
-    }
-    header img {
-      height: 60px;
-      margin-right: 1rem;
-    }
-    header h1 {
-      color: #e91e63;
-      margin: 0;
-    }
-    .container {
-      padding: 2rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-    h2 {
-      color: #e91e63;
-    }
-    .product-section {
-      margin-top: 3rem;
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-    }
-    .product {
-      background: #fff;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .product img {
-      width: 100%;
-      height: 200px; /* Adjusted height for landscape */
-      object-fit: cover;
-      border-radius: 8px;
-    }
-    .testimonial {
-      background: #ffffff;
-      padding: 1rem;
-      border-left: 4px solid #e91e63;
-      border-radius: 8px;
-      font-style: italic;
-      margin-bottom: 1rem;
-    }
-    footer {
-      background: #1a1a1a;
-      color: #fff;
       text-align: center;
-      padding: 1rem;
-      margin-top: 3rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-    a {
-      color: #e91e63;
+
+    nav a {
+      color: white;
       text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      font-size: 1.1rem;
     }
-    a:hover {
+
+    nav a:hover {
       text-decoration: underline;
     }
 
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      header h1 {
-        font-size: 1.5rem;
-        margin-top: 0.5rem;
-      }
+    header {
+      background-image: url('hero-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      animation: fadeIn 2s ease-out;
+    }
+
+    header p {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+      animation: fadeIn 3s ease-out;
+    }
+
+    header a {
+      margin-top: 1.5rem;
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: #e91e63;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    header a:hover {
+      background-color: #d5006e;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 3rem 1rem;
+    }
+
+    h2 {
+      font-size: 3rem;
+      color: #e91e63;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .product {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      aspect-ratio: 16/9;
+      transition: transform 0.3s ease;
+    }
+
+    .product h3 {
+      font-size: 1.5rem;
+      color: #333;
+      padding: 1rem;
+      background-color: #f8f8f8;
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .product p {
+      padding: 1rem;
+      font-size: 1rem;
+      color: #666;
+      text-align: center;
+    }
+
+    .product:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .product:hover img {
+      transform: scale(1.1);
+    }
+
+    footer {
+      background-color: #1a1a1a;
+      color: #fff;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    footer a {
+      color: #e91e63;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 10px;
+      font-size: 1.2rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .scroll-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #e91e63;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 50%;
+      font-size: 2rem;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: none;
+    }
+
+    .scroll-to-top:hover {
+      background-color: #d5006e;
+    }
+
+    .testimonial {
+      background-color: #fff;
+      padding: 20px;
+      margin: 15px 0;
+      border-left: 5px solid #e91e63;
+      font-style: italic;
+      border-radius: 10px;
+    }
+
+    .product-section button {
+      background: #e91e63;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+
+    .product-section button:hover {
+      background: #d5006e;
     }
   </style>
 </head>
 <body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#arts">Arts</a>
+    <a href="#jewelleries">Jewellery</a>
+    <a href="#order">Order</a>
+  </nav>
+
+  <!-- Hero Section -->
   <header>
-    <img src="crafixlogo.png" alt="Crafix Logo">
-    <h1>Welcome to Crafix</h1>
+    <div>
+      <h1>Welcome to Crafix</h1>
+      <p>Your one-stop destination for arts and jewelry</p>
+      <a href="#arts">Explore Now</a>
+    </div>
   </header>
 
+  <!-- Crafix Arts Section -->
+  <div class="container" id="arts">
+    <h2>Crafix Arts Section</h2>
+    <div class="products">
+      <div class="product">
+        <img src="polaroidpic.jpg" alt="Polaroids">
+        <h3>📸 Polaroids</h3>
+        <p>Best for heartfelt gifts ❤️<br><strong style="color:#d5006e;">🎁 Free envelope</strong> with 8+ pcs</p>
+      </div>
+      <div class="product">
+        <img src="pframe.jpg" alt="Photo Frame">
+        <h3>🖼️ Photo Frames</h3>
+        <p>Affordable & personalized<br>Perfect for décor or gifts</p>
+      </div>
+      <div class="product">
+        <img src="dec7598c84facdaef2fe673d560d674e.jpg" alt="Photo Album">
+        <h3>📔 Custom Photo Albums</h3>
+        <p>Unique & made with care<br>Capture memories in style</p>
+      </div>
+      <div class="product">
+        <img src="Hf0d32efab6804bbb9f51a36fe9880f33M.jpg_720x720q50.avif" alt="Spiral Notebook">
+        <h3>📚 Custom Notebooks</h3>
+        <p>Spiral bound | Custom covers</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crafix Jewelleries Section -->
+  <div class="container" id="jewelleries">
+    <h2>Crafix Jewelleries Section</h2>
+    <div class="products">
+      <div class="product">
+        <img src="1.jpg" alt="Beads Bracelet">
+        <h3>🪢 Beads Bracelets</h3>
+        <p>Starting @ ₹19<br>Beautiful charms & pendants!</p>
+      </div>
+      <div class="product">
+        <img src="reha-1.jpg" alt="Earrings">
+        <h3>✨ Earrings</h3>
+        <p>Starts @ ₹20 🦋<br>High quality & lightweight</p>
+      </div>
+      <div class="product">
+        <img src="d2d3943afb6139e9b571c12a1dbf5397.jpg" alt="Colorful Necklaces">
+        <h3>🌈 Stylish Aesthetic Necklaces</h3>
+        <p>Starting ₹49 💖<br>High Quality and Affordable</p>
+      </div>
+      <div class="product">
+        <img src="8bcb91b2-c540-4ede-8c55-f25161e2acec.c09d27ca2a17f49133f4f082273dcb2f.webp" alt="24K Rose">
+        <h3>🌹 24K Gold Plated Rose</h3>
+        <p>Perfect gift for your loved ones 💝<br>Elegant metal rose design</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
   <div class="container">
-    <p>Your one-stop destination for Polaroids, Jewellery & Custom Gifts.</p>
-
-    <section class="product-section">
-      <h2>Our Products – Crafix Arts 🎨</h2>
-      <div class="products">
-        <div class="product">
-          <img src="polaroidpic.jpg" alt="Polaroids">
-          <h3>📸 Polaroids</h3>
-          <p>Best for heartfelt gifts ❤️<br><strong style="color:#d5006e;">🎁 Free envelope</strong> with 8+ pcs</p>
-        </div>
-        <div class="product">
-          <img src="pframe.jpg" alt="Photo Frame">
-          <h3>🖼️ Photo Frames</h3>
-          <p>Affordable & personalized<br>Perfect for décor or gifts</p>
-        </div>
-        <div class="product">
-          <img src="dec7598c84facdaef2fe673d560d674e.jpg" alt="Photo Album">
-          <h3>📔 Custom Photo Albums</h3>
-          <p>Unique & made with care<br>Capture memories in style</p>
-        </div>
-        <div class="product">
-          <img src="Hf0d32efab6804bbb9f51a36fe9880f33M.jpg_720x720q50.avif" alt="Spiral Notebook">
-          <h3>📚 Custom Notebooks</h3>
-          <p>Spiral bound | Custom covers</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="product-section">
-      <h2>Our Products – Crafix Jewelleries 💍</h2>
-      <div class="products">
-        <div class="product">
-          <img src="1.jpg" alt="Beads Bracelet">
-          <h3>🪢 Beads Bracelets</h3>
-          <p>Starting @ ₹19<br>Beautiful charms & pendants!</p>
-        </div>
-        <div class="product">
-          <img src="reha-1.jpg" alt="Earrings">
-          <h3>✨ Earrings</h3>
-          <p>Starts @ ₹20 🦋<br>High quality & lightweight</p>
-        </div>
-        <div class="product">
-          <img src="d2d3943afb6139e9b571c12a1dbf5397.jpg" alt="Colorful Necklaces">
-          <h3>🌈 Stylish Aesthetic Necklaces</h3>
-          <p>Starting ₹49 💖<br>High Quality and Affordable</p>
-        </div>
-        <div class="product">
-          <img src="8bcb91b2-c540-4ede-8c55-f25161e2acec.c09d27ca2a17f49133f4f082273dcb2f.webp" alt="24K Rose">
-          <h3>🌹 24K Gold Plated Rose</h3>
-          <p>Perfect gift for your loved ones 💝<br>Elegant metal rose design</p>
-        </div>
-      </div>
-    </section>
-
     <section class="product-section">
       <h2>Customer Love 💌</h2>
       <div class="testimonial">“Absolutely love the Polaroids and the cute packaging! Fast delivery too!” – Lily</div>
       <div class="testimonial">“Bracelets are so pretty and exactly like the photo. 10/10 would recommend!” – Anushka</div>
     </section>
+  </div>
 
+  <!-- Order Section -->
+  <div class="container" id="order">
     <section class="product-section">
       <h2>Order Now 📦</h2>
       <p>We take orders via Instagram. Just DM us your product choices and details!</p>
       <p>📧 Email: crafix.arts@gmail.com<br>
-         📷 Instagram: <a href="https://instagram.com/crafix.arts" target="_blank">@crafix.arts</a> & <a href="https://instagram.com/crafix.jewelleries" target="_blank">@crafix.jewelleries</a>
+        📷 Instagram: <a href="https://instagram.com/crafix.arts" target="_blank">@crafix.arts</a> & 
+        <a href="https://instagram.com/crafix.jewelleries" target="_blank">@crafix.jewelleries</a>
       </p>
       <a href="https://instagram.com/crafix.arts" target="_blank">
-        <button style="background:#e91e63;color:white;padding:10px 20px;border:none;border-radius:8px;margin-top:1rem;cursor:pointer;">
-          Message to Order
-        </button>
+        <button>Message to Order</button>
       </a>
     </section>
   </div>
 
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()">↑</button>
+
+  <!-- Footer -->
   <footer>
     <p>© 2025 Crafix. All rights reserved.</p>
-    <p><a href="#">Crafix Arts</a> | <a href="#">Crafix Jewelleries</a></p>
+    <p><a href="crafix_arts.html">Crafix Arts</a> | <a href="crafix_jewelleries.html">Crafix Jewelleries</a></p>
   </footer>
+
+  <script>
+    window.onscroll = function () {
+      let scrollButton = document.querySelector('.scroll-to-top');
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        scrollButton.style.display = "block";
+      } else {
+        scrollButton.style.display = "none";
+      }
+    };
+
+    function scrollToTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
 </body>
 </html>
