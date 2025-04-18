@@ -1,4 +1,4 @@
-# Crafix - Capture Moments & Sparkle
+# Crafix
 
 Welcome to the official website of **Crafix**, a creative brand offering:
 
