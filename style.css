@@ -1,0 +1,246 @@
+
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: #FAD0C9;
+  color: #333;
+  overflow-x: hidden;
+  transition: background-color 0.4s, color 0.4s;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #eee;
+}
+
+#theme-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeInModal 0.6s ease forwards;
+  opacity: 0;
+  background: rgba(18, 18, 18, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+#theme-modal .modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 90%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+#theme-modal button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+#theme-modal .light-btn {
+  background: #FAD0C9;
+  color: #333;
+}
+
+#theme-modal .dark-btn {
+  background: #333;
+  color: white;
+}
+
+section {
+  display: none;
+  min-height: 100vh;
+  padding: 2rem;
+  animation: fadeIn 1s ease;
+}
+
+section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+header {
+  background-image: url('../assets/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+header img {
+  width: 120px;
+  margin-bottom: 1rem;
+}
+
+header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  min-height: 4rem;
+}
+
+.typing-animation::after {
+  content: "|";
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+header p {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+}
+
+header a {
+  margin-top: 1.5rem;
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: #e91e63;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+header a:hover {
+  background-color: #d5006e;
+}
+
+.choose-section, .section-page {
+  text-align: center;
+}
+
+.choose-section h2, .section-page h2 {
+  font-size: 2.5rem;
+  color: #e91e63;
+  margin-bottom: 2rem;
+}
+
+.choose-section button, .back-btn {
+  background: #e91e63;
+  color: white;
+  padding: 12px 25px;
+  font-size: 1rem;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.choose-section button:hover, .back-btn:hover {
+  background: #d5006e;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.product {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 250px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInProduct 0.5s forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.product img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product:hover img {
+  transform: scale(1.1);
+}
+
+body.dark-mode .product {
+  background: #1f1f1f;
+  color: #fff;
+}
+
+@keyframes fadeInProduct {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.product h3 {
+  background: #f8f8f8;
+  margin: 0;
+  padding: 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.product p {
+  padding: 10px;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .choose-section h2, .section-page h2 {
+    font-size: 1.8rem;
+  }
+
+  .choose-section button {
+    width: 90%;
+  }
+}
