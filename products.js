@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const productsData = {
     arts: [
@@ -26,13 +25,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  title.textContent = type === "arts" ? "Crafix Arts Collection" : "Crafix Jewelleries Collection";
+  // Update title based on type
+  title.textContent = type === "arts"
+    ? "Crafix Arts Collection"
+    : "Crafix Jewelleries Collection";
 
+  // Dynamically create product cards
   productsData[type].forEach((p, index) => {
-    const delay = index * 100;
     const productDiv = document.createElement("div");
     productDiv.className = "product";
-    productDiv.style.animationDelay = `${delay}ms`;
+    productDiv.style.animationDelay = `${index * 100}ms`;
     productDiv.innerHTML = `
       <img src="${p.img}" alt="${p.title}">
       <h3>${p.title}</h3>
@@ -41,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     list.appendChild(productDiv);
   });
 
+  // Apply saved theme
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
     document.body.classList.add("dark-mode");
