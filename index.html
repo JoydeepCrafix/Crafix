@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crafix</title>
+  <link rel="icon" href="assets/crafixlogo.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="theme-modal">
+    <div class="modal-content">
+      <h2>Welcome to Crafix!</h2>
+      <p>Choose your preferred theme:</p>
+      <button class="light-btn" onclick="setTheme('light')">🌞 Light Mode</button>
+      <button class="dark-btn" onclick="setTheme('dark')">🌙 Dark Mode</button>
+    </div>
+  </div>
+
+  <section id="front-page" class="active">
+    <header>
+      <div>
+        <img src="assets/crafixlogo.png" alt="Crafix Logo" />
+        <h1 class="typing-animation" id="typed-text"></h1>
+        <p>Your one-stop destination for arts and jewelry</p>
+        <a href="choose.html">Explore Now</a>
+      </div>
+    </header>
+  </section>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
