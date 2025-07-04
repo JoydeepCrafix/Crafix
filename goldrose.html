@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>24K Gold Rose - Crafix</title>
+  <link rel="icon" href="crafixlogo.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body.product-category-body {
+      font-family: 'Nunito', sans-serif;
+      padding: 2rem;
+      background-color: #f9f9f9;
+      color: #333;
+      text-align: center;
+    }
+    h1 {
+      color: #e91e63;
+      margin-bottom: 1rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 300px;
+      margin: 0 auto;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 1rem;
+    }
+    .product-card img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .product-card img:hover {
+      transform: scale(1.05);
+    }
+    .product-title {
+      font-weight: 700;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    .product-desc {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+    .product-price {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #e91e63;
+      margin-bottom: 1rem;
+    }
+    .btn {
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+      font-size: 1rem;
+    }
+    .btn:hover {
+      background-color: #d5006e;
+    }
+  </style>
+</head>
+<body class="product-category-body">
+  <h1>24K Gold Rose</h1>
+  <div class="product-card">
+    <img id="productImage" class="zoomable" src="8bcb91b2-c540-4ede-8c55-f25161e2acec.c09d27ca2a17f49133f4f082273dcb2f.webp" alt="24K Gold Rose" />
+    <div class="product-title">24K Gold Rose</div>
+    <div class="product-desc">A beautiful 24K gold-plated rose, perfect as a gift or decoration.</div>
+    <div class="product-price">₹169</div>
+    <button class="btn" onclick="buyNow()">Buy Now</button>
+  </div>
+  <br />
+  <a href="section.html?type=arts"><button class="back-btn">⬅ Back to Arts</button></a>
+
+  <script>
+    function addToCart() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const product = {
+        img: "8bcb91b2-c540-4ede-8c55-f25161e2acec.c09d27ca2a17f49133f4f082273dcb2f.webp",
+        title: "24K Gold Rose",
+        desc: "A beautiful 24K gold-plated rose, perfect as a gift or decoration.",
+        price: "₹169",
+        quantity: 1
+      };
+      const existingIndex = cart.findIndex(item => item.title === product.title);
+      if (existingIndex !== -1) {
+        cart[existingIndex].quantity += 1;
+      } else {
+        cart.push(product);
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(product.title + " added to cart");
+    }
+
+    function buyNow() {
+      addToCart();
+      window.location.href = 'cart.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Zoom modal functionality for all zoomable images
+      const modal = document.createElement('div');
+      modal.style.display = 'none';
+      modal.style.position = 'fixed';
+      modal.style.zIndex = '1000';
+      modal.style.left = '0';
+      modal.style.top = '0';
+      modal.style.width = '100%';
+      modal.style.height = '100%';
+      modal.style.overflow = 'auto';
+      modal.style.backgroundColor = 'rgba(0,0,0,0.8)';
+      modal.style.justifyContent = 'center';
+      modal.style.alignItems = 'center';
+
+      const modalImg = document.createElement('img');
+      modalImg.style.maxWidth = '90%';
+      modalImg.style.maxHeight = '90%';
+      modalImg.style.margin = 'auto';
+      modalImg.style.display = 'block';
+      modalImg.style.borderRadius = '10px';
+      modal.appendChild(modalImg);
+
+      // Create close button
+      const closeButton = document.createElement('span');
+      closeButton.innerHTML = '&times;';
+      closeButton.style.position = 'absolute';
+      closeButton.style.top = '20px';
+      closeButton.style.right = '30px';
+      closeButton.style.color = 'white';
+      closeButton.style.fontSize = '40px';
+      closeButton.style.fontWeight = 'bold';
+      closeButton.style.cursor = 'pointer';
+      closeButton.style.userSelect = 'none';
+      closeButton.style.zIndex = '1001';
+      modal.appendChild(closeButton);
+
+      document.body.appendChild(modal);
+
+      const zoomableImages = document.querySelectorAll('.zoomable');
+      zoomableImages.forEach(img => {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', () => {
+          modal.style.display = 'flex';
+          modalImg.src = img.src;
+        });
+      });
+
+      closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+
+      // Prevent modal close when clicking on the image
+      modalImg.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      // Clicking outside the image closes the modal
+      modal.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>

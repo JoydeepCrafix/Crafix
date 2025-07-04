@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Polaroids Collection - Crafix</title>
+  <link rel="icon" href="crafixlogo.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body.product-category-body {
+      font-family: 'Nunito', sans-serif;
+      padding: 2rem;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      color: #e91e63;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 250px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .product-card:hover img {
+      transform: scale(1.1);
+    }
+    .product-info {
+      padding: 10px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    .product-desc {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    .product-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+    }
+    .btn:hover {
+      background-color: #d5006e;
+    }
+  </style>
+</head>
+<body class="product-category-body">
+  <h1>Polaroids Collection</h1>
+  <div class="product-grid" id="product-grid">
+    <!-- Product cards will be rendered here -->
+  </div>
+  <br />
+  <a href="section.html?type=arts"><button class="back-btn">⬅ Back to Arts</button></a>
+
+  <script>
+    // Sample polaroid product variants data
+    const polaroids = [
+      { img: "polaroid5.jpg", title: "Mini Polaroids", desc: "Compact size for portability", price: "₹249" },
+      { img: "polaroid1.jpg", title: "Regular Size Polaroids", desc: "Classic instant photo style", price: "₹299" }
+    ];
+
+    const productGrid = document.getElementById('product-grid');
+
+    function addToCart(product) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const existingIndex = cart.findIndex(item => item.title === product.title);
+      if (existingIndex !== -1) {
+        cart[existingIndex].quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(product.title + " added to cart");
+    }
+
+    function buyNow(product) {
+      addToCart(product);
+      window.location.href = 'cart.html';
+    }
+
+    function renderProducts() {
+      polaroids.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img class="zoomable" src="${product.img}" alt="${product.title}" />
+          <div class="product-info">
+            <div>
+              <div class="product-title">${product.title}</div>
+              <div class="product-desc">${product.desc}</div>
+              <div class="product-price">${product.price}</div>
+            </div>
+            <div class="product-actions">
+              <button class="btn" onclick='buyNow(${JSON.stringify(product)})'>Buy Now</button>
+            </div>
+          </div>
+        `;
+        productGrid.appendChild(card);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+
+      // Zoom modal functionality for all zoomable images
+      const modal = document.createElement('div');
+      modal.style.display = 'none';
+      modal.style.position = 'fixed';
+      modal.style.zIndex = '1000';
+      modal.style.left = '0';
+      modal.style.top = '0';
+      modal.style.width = '100%';
+      modal.style.height = '100%';
+      modal.style.overflow = 'auto';
+      modal.style.backgroundColor = 'rgba(0,0,0,0.8)';
+      modal.style.justifyContent = 'center';
+      modal.style.alignItems = 'center';
+
+      const modalImg = document.createElement('img');
+      modalImg.style.maxWidth = '90%';
+      modalImg.style.maxHeight = '90%';
+      modalImg.style.margin = 'auto';
+      modalImg.style.display = 'block';
+      modalImg.style.borderRadius = '10px';
+      modal.appendChild(modalImg);
+
+      // Create close button
+      const closeButton = document.createElement('span');
+      closeButton.innerHTML = '&times;';
+      closeButton.style.position = 'absolute';
+      closeButton.style.top = '20px';
+      closeButton.style.right = '30px';
+      closeButton.style.color = 'white';
+      closeButton.style.fontSize = '40px';
+      closeButton.style.fontWeight = 'bold';
+      closeButton.style.cursor = 'pointer';
+      closeButton.style.userSelect = 'none';
+      closeButton.style.zIndex = '1001';
+      modal.appendChild(closeButton);
+
+      document.body.appendChild(modal);
+
+      const zoomableImages = document.querySelectorAll('.zoomable');
+      zoomableImages.forEach(img => {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', () => {
+          modal.style.display = 'flex';
+          modalImg.src = img.src;
+        });
+      });
+
+      closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+
+      // Prevent modal close when clicking on the image
+      modalImg.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      // Clicking outside the image closes the modal
+      modal.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>

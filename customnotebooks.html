@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Custom Notebooks - Crafix</title>
+  <link rel="icon" href="crafixlogo.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body.product-category-body {
+      font-family: 'Nunito', sans-serif;
+      padding: 2rem;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      color: #e91e63;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+    .product-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 250px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover img {
+      transform: scale(1.1);
+    }
+    .product-info {
+      padding: 10px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    .product-desc {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    .product-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+    }
+    .btn:hover {
+      background-color: #d5006e;
+    }
+  </style>
+</head>
+<body class="product-category-body">
+  <h1>Custom Notebooks</h1>
+  <div style="text-align: center; margin-top: 5rem; font-size: 2rem; color: #e91e63; font-weight: 700;">
+    Coming Soon
+  </div>
+  <br />
+  <a href="section.html?type=arts"><button class="back-btn">⬅ Back to Arts</button></a>
+</body>
+</html>
