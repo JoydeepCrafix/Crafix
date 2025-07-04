@@ -99,13 +99,13 @@
   <a href="section.html?type=jewelleries"><button class="back-btn">⬅ Back to Jewelleries</button></a>
 
   <script>
-    // Sample beads bracelets product variants data
+    // Sample beads bracelets product variants data with MRP, discounted price, and offer %
     const beadsbracelets = [
-      { img: "beads1.jpg", title: "Classic Beads Bracelet", desc: "Elegant and timeless design", price: "₹199" },
-      { img: "beads2.jpg", title: "Charm Beads Bracelet", desc: "With customizable charms", price: "₹249" },
-      { img: "beads3.jpg", title: "Leather Beads Bracelet", desc: "Stylish leather and beads combo", price: "₹299" },
-      { img: "beads4.jpg", title: "Colorful Beads Bracelet", desc: "Vibrant colors for every style", price: "₹179" },
-      { img: "beads5.jpg", title: "Minimalist Beads Bracelet", desc: "Simple and elegant", price: "₹159" }
+      { img: "beads1.jpg", title: "Classic Beads Bracelet", desc: "Elegant and timeless design", mrp: 249, discountedPrice: 199 },
+      { img: "beads2.jpg", title: "Charm Beads Bracelet", desc: "With customizable charms", mrp: 299, discountedPrice: 249 },
+      { img: "beads3.jpg", title: "Leather Beads Bracelet", desc: "Stylish leather and beads combo", mrp: 349, discountedPrice: 299 },
+      { img: "beads4.jpg", title: "Colorful Beads Bracelet", desc: "Vibrant colors for every style", mrp: 229, discountedPrice: 179 },
+      { img: "beads5.jpg", title: "Minimalist Beads Bracelet", desc: "Simple and elegant", mrp: 199, discountedPrice: 159 }
     ];
 
     const productGrid = document.getElementById('product-grid');
@@ -123,12 +123,13 @@
     }
 
     function buyNow(product) {
-      addToCart(product);
-      window.location.href = 'cart.html';
+      // Redirect to comingsoon.html instead of cart.html
+      window.location.href = 'comingsoon.html';
     }
 
     function renderProducts() {
       beadsbracelets.forEach(product => {
+        const offerPercent = Math.round(((product.mrp - product.discountedPrice) / product.mrp) * 100);
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
@@ -137,7 +138,11 @@
             <div>
               <div class="product-title">${product.title}</div>
               <div class="product-desc">${product.desc}</div>
-              <div class="product-price">${product.price}</div>
+              <div class="product-price">
+                <span class="offer-badge">${offerPercent}% off</span>
+                <div class="discounted-price">₹${product.discountedPrice}</div>
+                <div class="mrp"><span class="cut-price">₹${product.mrp}</span></div>
+              </div>
             </div>
             <div class="product-actions">
               <button class="btn" onclick='buyNow(${JSON.stringify(product).replace(/'/g, "\\'")})'>Buy Now</button>

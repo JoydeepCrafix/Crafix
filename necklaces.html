@@ -99,13 +99,13 @@
   <a href="section.html?type=jewelleries"><button class="back-btn">⬅ Back to Jewelleries</button></a>
 
   <script>
-    // Sample necklaces product variants data
+    // Sample necklaces product variants data with MRP, discounted price, and offer %
     const necklaces = [
-      { img: "necklace1.jpg", title: "Gold Plated Necklace", desc: "Elegant gold plated design", price: "₹799" },
-      { img: "necklace2.jpg", title: "Silver Necklace", desc: "Classic silver chain", price: "₹699" },
-      { img: "necklace3.jpg", title: "Pearl Necklace", desc: "Beautiful pearl beads", price: "₹899" },
-      { img: "necklace4.jpg", title: "Diamond Necklace", desc: "Sparkling diamond pendant", price: "₹1299" },
-      { img: "necklace5.jpg", title: "Beaded Necklace", desc: "Colorful beads for casual wear", price: "₹499" }
+      { img: "necklace1.jpg", title: "Gold Plated Necklace", desc: "Elegant gold plated design", mrp: 899, discountedPrice: 799 },
+      { img: "necklace2.jpg", title: "Silver Necklace", desc: "Classic silver chain", mrp: 799, discountedPrice: 699 },
+      { img: "necklace3.jpg", title: "Pearl Necklace", desc: "Beautiful pearl beads", mrp: 999, discountedPrice: 899 },
+      { img: "necklace4.jpg", title: "Diamond Necklace", desc: "Sparkling diamond pendant", mrp: 1499, discountedPrice: 1299 },
+      { img: "necklace5.jpg", title: "Beaded Necklace", desc: "Colorful beads for casual wear", mrp: 599, discountedPrice: 499 }
     ];
 
     const productGrid = document.getElementById('product-grid');
@@ -123,12 +123,13 @@
     }
 
     function buyNow(product) {
-      addToCart(product);
-      window.location.href = 'cart.html';
+      // Redirect to comingsoon.html instead of cart.html
+      window.location.href = 'comingsoon.html';
     }
 
     function renderProducts() {
       necklaces.forEach(product => {
+        const offerPercent = Math.round(((product.mrp - product.discountedPrice) / product.mrp) * 100);
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
@@ -137,7 +138,11 @@
             <div>
               <div class="product-title">${product.title}</div>
               <div class="product-desc">${product.desc}</div>
-              <div class="product-price">${product.price}</div>
+              <div class="product-price">
+                <span class="offer-badge">${offerPercent}% off</span>
+                <div class="discounted-price">₹${product.discountedPrice}</div>
+                <div class="mrp"><span class="cut-price">₹${product.mrp}</span></div>
+              </div>
             </div>
             <div class="product-actions">
               <button class="btn" onclick='buyNow(${JSON.stringify(product).replace(/'/g, "\\'")})'>Buy Now</button>

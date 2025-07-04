@@ -321,3 +321,46 @@ body.dark-mode .product {
   text-align: center;
   line-height: 1.4;
 }
+
+.offer-badge {
+  background-color: #388e3c; /* green background */
+  color: white;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  margin-right: 6px;
+  display: inline-block;
+}
+
+.limited-deal {
+  font-size: 0.85rem;
+  color: #388e3c; /* green text color, no box */
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.discounted-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #e91e63;
+  margin-top: 4px;
+}
+
+.unit-price {
+  font-size: 0.9rem;
+  color: #888;
+  font-weight: 500;
+  margin-left: 6px;
+}
+
+.mrp {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 2px;
+}
+
+.cut-price {
+  text-decoration: line-through;
+  color: #888;
+}

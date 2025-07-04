@@ -84,7 +84,11 @@
     <img id="productImage" class="zoomable" src="8bcb91b2-c540-4ede-8c55-f25161e2acec.c09d27ca2a17f49133f4f082273dcb2f.webp" alt="24K Gold Rose" />
     <div class="product-title">24K Gold Rose</div>
     <div class="product-desc">A beautiful 24K gold-plated rose, perfect as a gift or decoration.</div>
-    <div class="product-price">₹169</div>
+    <div class="product-price">
+      <span class="offer-badge">83% off</span>
+      <div class="discounted-price">₹169</div>
+      <div class="mrp"><span class="cut-price">₹1000</span></div>
+    </div>
     <button class="btn" onclick="buyNow()">Buy Now</button>
   </div>
   <br />
@@ -111,8 +115,8 @@
     }
 
     function buyNow() {
-      addToCart();
-      window.location.href = 'cart.html';
+      // Redirect to comingsoon.html instead of cart.html
+      window.location.href = 'comingsoon.html';
     }
 
     document.addEventListener('DOMContentLoaded', () => {

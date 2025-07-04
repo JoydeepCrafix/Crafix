@@ -99,13 +99,13 @@
   <a href="section.html?type=arts"><button class="back-btn">⬅ Back to Arts</button></a>
 
   <script>
-    // Sample photo frames product variants data
+    // Sample photo frames product variants data with MRP, discounted price, and offer %
     const frames = [
-      { img: "frame1.jpg", title: "Classic Wooden Frame", desc: "Elegant wooden frame for your photos", price: "₹499" },
-      { img: "frame2.jpg", title: "Modern Metal Frame", desc: "Sleek metal frame with glass", price: "₹599" },
-      { img: "frame3.jpg", title: "Vintage Frame", desc: "Antique style frame with intricate design", price: "₹699" },
-      { img: "frame4.jpg", title: "Collage Frame", desc: "Multi-photo collage frame", price: "₹799" },
-      { img: "frame5.jpg", title: "Digital Frame", desc: "Electronic frame with slideshow", price: "₹999" }
+      { img: "frame1.jpg", title: "Classic Wooden Frame", desc: "Elegant wooden frame for your photos", mrp: 599, discountedPrice: 499 },
+      { img: "frame2.jpg", title: "Modern Metal Frame", desc: "Sleek metal frame with glass", mrp: 699, discountedPrice: 599 },
+      { img: "frame3.jpg", title: "Vintage Frame", desc: "Antique style frame with intricate design", mrp: 799, discountedPrice: 699 },
+      { img: "frame4.jpg", title: "Collage Frame", desc: "Multi-photo collage frame", mrp: 899, discountedPrice: 799 },
+      { img: "frame5.jpg", title: "Digital Frame", desc: "Electronic frame with slideshow", mrp: 1099, discountedPrice: 999 }
     ];
 
     const productGrid = document.getElementById('product-grid');
@@ -123,12 +123,13 @@
     }
 
     function buyNow(product) {
-      addToCart(product);
-      window.location.href = 'cart.html';
+      // Redirect to comingsoon.html instead of cart.html
+      window.location.href = 'comingsoon.html';
     }
 
     function renderProducts() {
       frames.forEach(product => {
+        const offerPercent = Math.round(((product.mrp - product.discountedPrice) / product.mrp) * 100);
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
@@ -137,10 +138,13 @@
             <div>
               <div class="product-title">${product.title}</div>
               <div class="product-desc">${product.desc}</div>
-              <div class="product-price">${product.price}</div>
+              <div class="product-price">
+                <span class="offer-badge">${offerPercent}% off</span>
+                <div class="discounted-price">₹${product.discountedPrice}</div>
+                <div class="mrp"><span class="cut-price">₹${product.mrp}</span></div>
+              </div>
             </div>
             <div class="product-actions">
-              <button class="btn" onclick='addToCart(${JSON.stringify(product).replace(/'/g, "\\'")})'>Add to Cart</button>
               <button class="btn" onclick='buyNow(${JSON.stringify(product).replace(/'/g, "\\'")})'>Buy Now</button>
             </div>
           </div>

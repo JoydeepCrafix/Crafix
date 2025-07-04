@@ -100,10 +100,10 @@
   <a href="section.html?type=arts"><button class="back-btn">⬅ Back to Arts</button></a>
 
   <script>
-    // Sample polaroid product variants data
+    // Sample polaroid product variants data with MRP, discounted price, unit price, and offer %
     const polaroids = [
-      { img: "polaroid5.jpg", title: "Mini Polaroids", desc: "Compact size for portability", price: "₹249" },
-      { img: "polaroid1.jpg", title: "Regular Size Polaroids", desc: "Classic instant photo style", price: "₹299" }
+      { img: "polaroid5.jpg", title: "Mini Polaroids", desc: "Compact size for portability", mrp: 100, discountedPrice: 30, unitCount: 4 },
+      { img: "polaroid1.jpg", title: "Regular Size Polaroids", desc: "Classic instant photo style", mrp: 80, discountedPrice: 20, unitCount: 2 }
     ];
 
     const productGrid = document.getElementById('product-grid');
@@ -121,12 +121,13 @@
     }
 
     function buyNow(product) {
-      addToCart(product);
-      window.location.href = 'cart.html';
+      // Redirect to comingsoon.html instead of cart.html
+      window.location.href = 'comingsoon.html';
     }
 
     function renderProducts() {
       polaroids.forEach(product => {
+        const offerPercent = Math.round(((product.mrp - product.discountedPrice) / product.mrp) * 100);
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
@@ -135,7 +136,11 @@
             <div>
               <div class="product-title">${product.title}</div>
               <div class="product-desc">${product.desc}</div>
-              <div class="product-price">${product.price}</div>
+              <div class="product-price">
+                <span class="offer-badge">${offerPercent}% off</span>
+                <div class="discounted-price">₹${product.discountedPrice} <span class="unit-price">(₹${(product.discountedPrice / product.unitCount).toFixed(2)}/count)</span></div>
+                <div class="mrp"><span class="cut-price">₹${product.mrp}</span></div>
+              </div>
             </div>
             <div class="product-actions">
               <button class="btn" onclick='buyNow(${JSON.stringify(product)})'>Buy Now</button>

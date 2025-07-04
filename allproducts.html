@@ -104,6 +104,27 @@
       color: #e91e63;
       margin-bottom: 1rem;
     }
+    .offer-badge {
+      background-color: #4CAF50;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: inline-block;
+      text-align: left;
+      width: auto;
+    }
+    .discounted-price {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .mrp {
+      color: #999;
+      text-decoration: line-through;
+      font-size: 0.9rem;
+    }
     .btn {
       background-color: #e91e63;
       color: white;
@@ -154,28 +175,29 @@
 
   <script>
     const allProducts = [
-      { img: "polaroid5.jpg", title: "Mini Polaroids", desc: "Compact size for portability", price: "₹249" },
-      { img: "polaroid1.jpg", title: "Regular Size Polaroids", desc: "Classic instant photo style", price: "₹299" },
-      { img: "frame1.jpg", title: "Classic Wooden Frame", desc: "Elegant wooden frame for your photos", price: "₹499" },
-      { img: "frame2.jpg", title: "Modern Metal Frame", desc: "Sleek metal frame with glass", price: "₹599" },
-      { img: "frame3.jpg", title: "Vintage Frame", desc: "Antique style frame with intricate design", price: "₹699" },
-      { img: "frame4.jpg", title: "Collage Frame", desc: "Multi-photo collage frame", price: "₹799" },
-      { img: "frame5.jpg", title: "Digital Frame", desc: "Electronic frame with slideshow", price: "₹999" },
-      { img: "beads1.jpg", title: "Classic Beads Bracelet", desc: "Elegant and timeless design", price: "₹199" },
-      { img: "beads2.jpg", title: "Charm Beads Bracelet", desc: "With customizable charms", price: "₹249" },
-      { img: "beads3.jpg", title: "Leather Beads Bracelet", desc: "Stylish leather and beads combo", price: "₹299" },
-      { img: "beads4.jpg", title: "Colorful Beads Bracelet", desc: "Vibrant colors for every style", price: "₹179" },
-      { img: "beads5.jpg", title: "Minimalist Beads Bracelet", desc: "Simple and elegant", price: "₹159" },
-      { img: "earring1.jpg", title: "Stud Earrings", desc: "Simple and elegant studs", price: "₹299" },
-      { img: "earring2.jpg", title: "Hoop Earrings", desc: "Classic hoop design", price: "₹399" },
-      { img: "earring3.jpg", title: "Drop Earrings", desc: "Stylish drop earrings", price: "₹349" },
-      { img: "earring4.jpg", title: "Chandelier Earrings", desc: "Elegant chandelier style", price: "₹499" },
-      { img: "earring5.jpg", title: "Pearl Earrings", desc: "Classic pearl studs", price: "₹399" },
-      { img: "necklace1.jpg", title: "Gold Plated Necklace", desc: "Elegant gold plated design", price: "₹799" },
-      { img: "necklace2.jpg", title: "Silver Necklace", desc: "Classic silver chain", price: "₹699" },
-      { img: "necklace3.jpg", title: "Pearl Necklace", desc: "Beautiful pearl beads", price: "₹899" },
-      { img: "necklace4.jpg", title: "Diamond Necklace", desc: "Sparkling diamond pendant", price: "₹1299" },
-      { img: "necklace5.jpg", title: "Beaded Necklace", desc: "Colorful beads for casual wear", price: "₹499" }
+      { img: "polaroid5.jpg", title: "Mini Polaroids", desc: "Compact size for portability", mrp: 100, discountedPrice: 30, unitCount: 4 },
+      { img: "polaroid1.jpg", title: "Regular Size Polaroids", desc: "Classic instant photo style", mrp: 80, discountedPrice: 20, unitCount: 2 },
+      { img: "frame1.jpg", title: "Classic Wooden Frame", desc: "Elegant wooden frame for your photos", mrp: 599, discountedPrice: 499 },
+      { img: "frame2.jpg", title: "Modern Metal Frame", desc: "Sleek metal frame with glass", mrp: 699, discountedPrice: 599 },
+      { img: "frame3.jpg", title: "Vintage Frame", desc: "Antique style frame with intricate design", mrp: 799, discountedPrice: 699 },
+      { img: "frame4.jpg", title: "Collage Frame", desc: "Multi-photo collage frame", mrp: 899, discountedPrice: 799 },
+      { img: "frame5.jpg", title: "Digital Frame", desc: "Electronic frame with slideshow", mrp: 1099, discountedPrice: 999 },
+      { img: "beads1.jpg", title: "Classic Beads Bracelet", desc: "Elegant and timeless design", mrp: 249, discountedPrice: 199 },
+      { img: "beads2.jpg", title: "Charm Beads Bracelet", desc: "With customizable charms", mrp: 299, discountedPrice: 249 },
+      { img: "beads3.jpg", title: "Leather Beads Bracelet", desc: "Stylish leather and beads combo", mrp: 349, discountedPrice: 299 },
+      { img: "beads4.jpg", title: "Colorful Beads Bracelet", desc: "Vibrant colors for every style", mrp: 229, discountedPrice: 179 },
+      { img: "beads5.jpg", title: "Minimalist Beads Bracelet", desc: "Simple and elegant", mrp: 199, discountedPrice: 159 },
+      { img: "earring1.jpg", title: "Stud Earrings", desc: "Simple and elegant studs", mrp: 349, discountedPrice: 299 },
+      { img: "earring2.jpg", title: "Hoop Earrings", desc: "Classic hoop design", mrp: 449, discountedPrice: 399 },
+      { img: "earring3.jpg", title: "Drop Earrings", desc: "Stylish drop earrings", mrp: 399, discountedPrice: 349 },
+      { img: "earring4.jpg", title: "Chandelier Earrings", desc: "Elegant chandelier style", mrp: 549, discountedPrice: 499 },
+      { img: "earring5.jpg", title: "Pearl Earrings", desc: "Classic pearl studs", mrp: 449, discountedPrice: 399 },
+      { img: "necklace1.jpg", title: "Gold Plated Necklace", desc: "Elegant gold plated design", mrp: 899, discountedPrice: 799 },
+      { img: "necklace2.jpg", title: "Silver Necklace", desc: "Classic silver chain", mrp: 799, discountedPrice: 699 },
+      { img: "necklace3.jpg", title: "Pearl Necklace", desc: "Beautiful pearl beads", mrp: 999, discountedPrice: 899 },
+      { img: "necklace4.jpg", title: "Diamond Necklace", desc: "Sparkling diamond pendant", mrp: 1499, discountedPrice: 1299 },
+      { img: "necklace5.jpg", title: "Beaded Necklace", desc: "Colorful beads for casual wear", mrp: 599, discountedPrice: 499 },
+      { img: "8bcb91b2-c540-4ede-8c55-f25161e2acec.c09d27ca2a17f49133f4f082273dcb2f.webp", title: "24K Gold Rose", desc: "A beautiful 24K gold-plated rose, perfect as a gift or decoration.", mrp: 1000, discountedPrice: 169 }
     ];
 
     const productGrid = document.getElementById('product-grid');
@@ -195,13 +217,14 @@
     }
 
     function buyNow(product) {
-      addToCart(product);
-      window.location.href = 'cart.html';
+      // Redirect to comingsoon.html instead of cart.html
+      window.location.href = 'comingsoon.html';
     }
 
     function renderProducts(products) {
       productGrid.innerHTML = '';
       products.forEach(product => {
+        const offerPercent = Math.round(((product.mrp - product.discountedPrice) / product.mrp) * 100);
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
@@ -210,7 +233,11 @@
             <div>
               <div class="product-title">${product.title}</div>
               <div class="product-desc">${product.desc}</div>
-              <div class="product-price">${product.price}</div>
+        <div class="product-price">
+          <span class="offer-badge">${offerPercent}% off</span><br/>
+          <div class="discounted-price">₹${product.discountedPrice} ${product.unitCount ? `<span class="unit-price">(₹${(product.discountedPrice / product.unitCount).toFixed(2)}/count)</span>` : ''}</div>
+          <div class="mrp"><span class="cut-price">₹${product.mrp}</span></div>
+        </div>
             </div>
             <button class="btn" onclick='buyNow(${JSON.stringify(product).replace(/'/g, "\\'")})'>Buy Now</button>
           </div>

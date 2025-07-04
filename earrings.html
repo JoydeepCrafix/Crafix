@@ -99,13 +99,13 @@
   <a href="section.html?type=jewelleries"><button class="back-btn">⬅ Back to Jewelleries</button></a>
 
   <script>
-    // Sample earrings product variants data
+    // Sample earrings product variants data with MRP, discounted price, and offer %
     const earrings = [
-      { img: "earring1.jpg", title: "Stud Earrings", desc: "Simple and elegant studs", price: "₹299" },
-      { img: "earring2.jpg", title: "Hoop Earrings", desc: "Classic hoop design", price: "₹399" },
-      { img: "earring3.jpg", title: "Drop Earrings", desc: "Stylish drop earrings", price: "₹349" },
-      { img: "earring4.jpg", title: "Chandelier Earrings", desc: "Elegant chandelier style", price: "₹499" },
-      { img: "earring5.jpg", title: "Pearl Earrings", desc: "Classic pearl studs", price: "₹399" }
+      { img: "earring1.jpg", title: "Stud Earrings", desc: "Simple and elegant studs", mrp: 349, discountedPrice: 299 },
+      { img: "earring2.jpg", title: "Hoop Earrings", desc: "Classic hoop design", mrp: 449, discountedPrice: 399 },
+      { img: "earring3.jpg", title: "Drop Earrings", desc: "Stylish drop earrings", mrp: 399, discountedPrice: 349 },
+      { img: "earring4.jpg", title: "Chandelier Earrings", desc: "Elegant chandelier style", mrp: 549, discountedPrice: 499 },
+      { img: "earring5.jpg", title: "Pearl Earrings", desc: "Classic pearl studs", mrp: 449, discountedPrice: 399 }
     ];
 
     const productGrid = document.getElementById('product-grid');
@@ -123,12 +123,13 @@
     }
 
     function buyNow(product) {
-      addToCart(product);
-      window.location.href = 'cart.html';
+      // Redirect to comingsoon.html instead of cart.html
+      window.location.href = 'comingsoon.html';
     }
 
     function renderProducts() {
       earrings.forEach(product => {
+        const offerPercent = Math.round(((product.mrp - product.discountedPrice) / product.mrp) * 100);
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
@@ -137,7 +138,11 @@
             <div>
               <div class="product-title">${product.title}</div>
               <div class="product-desc">${product.desc}</div>
-              <div class="product-price">${product.price}</div>
+              <div class="product-price">
+                <span class="offer-badge">${offerPercent}% off</span>
+                <div class="discounted-price">₹${product.discountedPrice}</div>
+                <div class="mrp"><span class="cut-price">₹${product.mrp}</span></div>
+              </div>
             </div>
             <div class="product-actions">
               <button class="btn" onclick='buyNow(${JSON.stringify(product).replace(/'/g, "\\'")})'>Buy Now</button>
