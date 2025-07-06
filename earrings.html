@@ -88,24 +88,35 @@
     .btn:hover {
       background-color: #d5006e;
     }
+    /* Hide scrollbar but keep scroll functionality */
+    #modal-content, #modal-content * {
+      scrollbar-width: none !important; /* Firefox */
+      -ms-overflow-style: none !important; /* IE/Edge */
+    }
+    #modal-content::-webkit-scrollbar, #modal-content *::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      background: transparent !important;
+    }
   </style>
 </head>
 <body class="product-category-body">
+  <!-- Theme toggle removed -->
   <h1>Earrings</h1>
-  <div class="product-grid" id="product-grid">
-    <!-- Product cards will be rendered here -->
-  </div>
+  <div class="product-grid" id="product-grid"></div>
   <br />
   <a href="section.html?type=jewelleries"><button class="back-btn">⬅ Back to Jewelleries</button></a>
+  <script src="main.js"></script>
 
   <script>
     // Sample earrings product variants data with MRP, discounted price, and offer %
     const earrings = [
-      { img: "earring1.jpg", title: "Stud Earrings", desc: "Simple and elegant studs", mrp: 349, discountedPrice: 299 },
-      { img: "earring2.jpg", title: "Hoop Earrings", desc: "Classic hoop design", mrp: 449, discountedPrice: 399 },
-      { img: "earring3.jpg", title: "Drop Earrings", desc: "Stylish drop earrings", mrp: 399, discountedPrice: 349 },
-      { img: "earring4.jpg", title: "Chandelier Earrings", desc: "Elegant chandelier style", mrp: 549, discountedPrice: 499 },
-      { img: "earring5.jpg", title: "Pearl Earrings", desc: "Classic pearl studs", mrp: 449, discountedPrice: 399 }
+      { img: "earring1.jpg", title: "Stud Earrings", desc: "Simple and elegant studs", mrp: 349, discountedPrice: 299, unitCount: 1 },
+      { img: "earring2.jpg", title: "Hoop Earrings", desc: "Classic hoop design", mrp: 449, discountedPrice: 399, unitCount: 1 },
+      { img: "earring3.jpg", title: "Drop Earrings", desc: "Stylish drop earrings", mrp: 399, discountedPrice: 349, unitCount: 1 },
+      { img: "earring4.jpg", title: "Chandelier Earrings", desc: "Elegant chandelier style", mrp: 549, discountedPrice: 499, unitCount: 1 },
+      { img: "earring5.jpg", title: "Pearl Earrings", desc: "Classic pearl studs", mrp: 449, discountedPrice: 399, unitCount: 1 }
     ];
 
     const productGrid = document.getElementById('product-grid');
@@ -123,7 +134,9 @@
     }
 
     function buyNow(product) {
-      // Redirect to comingsoon.html instead of cart.html
+      // Store modal open state before redirect
+      localStorage.setItem('crafixEarringsModalOpen', 'true');
+      localStorage.setItem('crafixEarringsModalProduct', JSON.stringify(product));
       window.location.href = 'comingsoon.html';
     }
 
@@ -138,84 +151,380 @@
             <div>
               <div class="product-title">${product.title}</div>
               <div class="product-desc">${product.desc}</div>
-              <div class="product-price">
-                <span class="offer-badge">${offerPercent}% off</span>
-                <div class="discounted-price">₹${product.discountedPrice}</div>
-                <div class="mrp"><span class="cut-price">₹${product.mrp}</span></div>
+              <div class="product-rating" style="display:flex;align-items:center;gap:5px;margin-bottom:4px;">
+                <span style="background:#bdbdbd;color:#fff;border-radius:3px;padding:0.5px 4px 0.5px 3px;font-weight:700;font-size:0.81rem;display:flex;align-items:center;gap:1.5px;">
+                  0.0 <span style="font-size:0.88rem;margin-left:1.5px;">★</span>
+                </span>
+                <span style="color:#888;font-size:0.81rem;font-weight:500;">(0)</span>
+              </div>
+              <div class="product-price" style="margin-top:2px; display:flex; flex-direction:column; align-items:flex-start;">
+                <span style="display:flex;align-items:baseline;gap:6px;">
+                  <span style="font-size:1.38rem;font-weight:800;color:#e91e63;">₹${product.discountedPrice}</span>
+                  <span style="color:#888;font-size:0.93rem;font-weight:500;">(₹${(product.discountedPrice / product.unitCount).toFixed(2)}/count)</span>
+                </span>
+                <span style="margin-top:1.5px;">
+                  <span style="color:#888;font-size:0.97rem;text-decoration:line-through;">₹${product.mrp}</span>
+                  <span style="color:#388e3c;font-size:0.97rem;font-weight:600;margin-left:6px;">${offerPercent}% off</span>
+                </span>
               </div>
             </div>
-            <div class="product-actions">
-              <button class="btn" onclick='buyNow(${JSON.stringify(product).replace(/'/g, "\\'")})'>Buy Now</button>
+            <div class="product-actions" style="display:flex; justify-content:center; align-items:center; margin-top:12px;">
+              <button class="btn" style="width:85%; max-width:200px; display:block; margin:0 auto; font-size:1.08rem; padding:10px 0; border-radius:30px;" onclick='buyNow(${JSON.stringify(product)})'>Buy Now</button>
             </div>
           </div>
         `;
+        // Add click event to open modal with product details
+        card.addEventListener('click', function(e) {
+          // Prevent Buy Now button from triggering modal
+          if (e.target.classList.contains('btn')) return;
+          openProductModal(product);
+        });
         productGrid.appendChild(card);
       });
     }
 
+    // --- Product Details Modal (Flipkart-style) ---
+    // Create modal HTML structure
+    const productModal = document.createElement('div');
+    productModal.id = 'product-details-modal';
+    productModal.style.display = 'none';
+    productModal.style.position = 'fixed';
+    productModal.style.zIndex = '2000';
+    productModal.style.left = '0';
+    productModal.style.top = '0';
+    productModal.style.width = '100vw';
+    productModal.style.height = '100vh';
+    productModal.style.overflow = 'auto';
+    productModal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+    productModal.style.justifyContent = 'center';
+    productModal.style.alignItems = 'center';
+    productModal.innerHTML = `
+      <div id="modal-content" style="background: #fff; border-radius: 16px; max-width: 900px; width: 98%; max-height: 90vh; margin: 40px auto; padding: 0; position: fixed; left: 0; right: 0; top: 0; bottom: 0; box-shadow: 0 8px 32px rgba(0,0,0,0.25); display: flex; flex-direction: row; align-items: stretch; overflow: hidden; z-index: 3000;">
+        <div style="position: absolute; top: 18px; right: 28px; display: flex; flex-direction: column; align-items: flex-end; z-index: 3;">
+          <span id="close-modal-btn" style="font-size: 2.5rem; color: #e91e63; font-weight: bold; cursor: pointer; user-select: none; z-index:2; line-height:1; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; box-shadow: none; background: none; border: none;">&times;</span>
+          <button id="modal-share-btn" title="Share this product" style="background: none; border: none; outline: none; width: 40px; height: 40px; margin-top: 10px; box-shadow: none; color: #e91e63; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: color 0.18s; padding: 0;">
+            <span id="modal-share-icon" style="display:inline-block; width:22px; height:22px;">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="5.5" r="2.5" stroke="#e91e63" stroke-width="2.8" fill="#fff"/>
+                <circle cx="6" cy="12" r="2.5" stroke="#e91e63" stroke-width="2.8" fill="#fff"/>
+                <circle cx="18" cy="18.5" r="2.5" stroke="#e91e63" stroke-width="2.8" fill="#fff"/>
+                <line x1="7.7" y1="11.0" x2="16.3" y2="6.8" stroke="#e91e63" stroke-width="2.8"/>
+                <line x1="7.7" y1="13.0" x2="16.3" y2="17.2" stroke="#e91e63" stroke-width="2.8"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div style="flex:1.1; background:#fafafa; display:flex; align-items:center; justify-content:center; min-width:180px; min-height:260px; border-right:1px solid #f0f0f0;">
+          <img id="modal-img" src="" alt="Product Image" style="max-width: 90%; max-height: 320px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); background:#fff;" />
+        </div>
+        <div style="flex:2; padding: 32px 28px 24px 28px; display:flex; flex-direction:column; justify-content:space-between; overflow-y: auto; max-height: 90vh; min-width:0;">
+          <div style="overflow-y:auto;">
+            <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:18px;">
+              <div id="modal-title" style="font-size: 1.3rem; font-weight: 700; color: #e91e63; margin-bottom: 6px; text-align:left; width:100%;"></div>
+              <div id="modal-price" style="margin-bottom: 4px; text-align:left; width:100%;"></div>
+              <div id="modal-offer" style="margin-bottom: 4px; font-size:1.01rem; color:#388e3c; font-weight:600; text-align:left; width:100%;"></div>
+              <div id="modal-unit" style="margin-bottom: 6px; font-size:0.97rem; color:#888; text-align:left; width:100%;"></div>
+              <div id="modal-ratings" style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px; justify-content:flex-start; width:100%;">
+                <span style="background:#bdbdbd; color:#fff; border-radius:16px; padding:3px 14px 3px 10px; font-weight:700; font-size:1.05rem; display: flex; align-items: center; gap: 4px;">
+                  <span style="font-size:1.1rem; margin-right:2px;">★</span>0.0
+                </span>
+                <span style="color:#222; font-size:1.01rem; font-weight:500;">0 Ratings</span>
+              </div>
+            </div>
+            <!-- Product Description Box -->
+            <div id="desc-box-modal" style="background:#f9f9fa; border-radius:10px; padding:18px 18px 14px 18px; margin-bottom:18px; box-shadow:0 1px 6px rgba(0,0,0,0.04);">
+              <div style="font-size:1.13rem; font-weight:600; color:#e91e63; margin-bottom:8px;">Product Description</div>
+              <div id="modal-desc" style="font-size: 1.05rem; color: #444; line-height:1.6;"></div>
+            </div>
+            <!-- Specifications Box -->
+            <div id="specs-box-modal" style="background:#f7f7f7; border-radius:10px; padding:16px 18px 12px 18px; margin-bottom:18px; box-shadow:0 1px 6px rgba(0,0,0,0.04);">
+              <div style="font-size:1.13rem; font-weight:600; color:#e91e63; margin-bottom:10px;">Specifications</div>
+              <table style="width:100%; font-size:1.01rem; color:#444; border-collapse:collapse;">
+                <tbody id="specs-table">
+                  <tr><td style="padding:4px 8px; font-weight:500;">Type</td><td style="padding:4px 8px;">Earrings</td></tr>
+                  <tr><td style="padding:4px 8px; font-weight:500;">Material</td><td style="padding:4px 8px;">Mixed Metal/Beads</td></tr>
+                  <tr><td style="padding:4px 8px; font-weight:500;">Plating</td><td style="padding:4px 8px;">Gold/Silver/None</td></tr>
+                  <tr><td style="padding:4px 8px; font-weight:500;">Closure</td><td style="padding:4px 8px;">Push Back/Hook</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Ratings Breakdown Box (now below specifications) -->
+            <div style="background:#f5f5f7; border-radius:12px; box-shadow:0 1px 8px rgba(0,0,0,0.06); padding:18px 18px 18px 18px; margin-bottom:18px;">
+              <div style="font-size:1.13rem; font-weight:700; color:#e91e63; margin-bottom:13px; letter-spacing:0.5px;">Ratings</div>
+              <div style="display:flex; align-items:center; gap:18px; margin-bottom:8px;">
+                <span style="font-size:1.7rem; font-weight:800; color:#222; display:flex; align-items:center; gap:6px;">
+                  <span id="modal-rating-avg">0.0</span>
+                  <span style="font-size:1.7rem; color:#111; font-weight:900; margin-left:2px;">★</span>
+                </span>
+                <span id="modal-rating-count" style="color:#555; font-size:1.01rem; font-weight:400;">0 Ratings</span>
+              </div>
+              <div id="modal-rating-bars">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+                  <span style="width:22px;display:inline-block;font-size:1.01rem;color:#222;font-weight:600;">5★</span>
+                  <div style="flex:1;height:10px;background:#e0e0e0;border-radius:6px;overflow:hidden;">
+                    <div style="width:0%;height:100%;background:#388e3c;"></div>
+                  </div>
+                  <span style="width:28px;display:inline-block;font-size:0.97rem;color:#888;text-align:right;">0</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+                  <span style="width:22px;display:inline-block;font-size:1.01rem;color:#222;font-weight:600;">4★</span>
+                  <div style="flex:1;height:10px;background:#e0e0e0;border-radius:6px;overflow:hidden;">
+                    <div style="width:0%;height:100%;background:#388e3c;"></div>
+                  </div>
+                  <span style="width:28px;display:inline-block;font-size:0.97rem;color:#888;text-align:right;">0</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+                  <span style="width:22px;display:inline-block;font-size:1.01rem;color:#222;font-weight:600;">3★</span>
+                  <div style="flex:1;height:10px;background:#e0e0e0;border-radius:6px;overflow:hidden;">
+                    <div style="width:0%;height:100%;background:#388e3c;"></div>
+                  </div>
+                  <span style="width:28px;display:inline-block;font-size:0.97rem;color:#888;text-align:right;">0</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+                  <span style="width:22px;display:inline-block;font-size:1.01rem;color:#222;font-weight:600;">2★</span>
+                  <div style="flex:1;height:10px;background:#e0e0e0;border-radius:6px;overflow:hidden;">
+                    <div style="width:0%;height:100%;background:#388e3c;"></div>
+                  </div>
+                  <span style="width:28px;display:inline-block;font-size:0.97rem;color:#888;text-align:right;">0</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+                  <span style="width:22px;display:inline-block;font-size:1.01rem;color:#222;font-weight:600;">1★</span>
+                  <div style="flex:1;height:10px;background:#e0e0e0;border-radius:6px;overflow:hidden;">
+                    <div style="width:0%;height:100%;background:#388e3c;"></div>
+                  </div>
+                  <span style="width:28px;display:inline-block;font-size:0.97rem;color:#888;text-align:right;">0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 10px;">
+            <button id="modal-buy-btn" class="btn" style="font-size: 1.1rem; padding: 10px 32px; width: 100%;">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(productModal);
+
+    // --- Fullscreen Image Viewer ---
+    let fullscreenOverlay = document.getElementById('fullscreen-img-overlay');
+    if (!fullscreenOverlay) {
+      fullscreenOverlay = document.createElement('div');
+      fullscreenOverlay.id = 'fullscreen-img-overlay';
+      fullscreenOverlay.style.display = 'none';
+      fullscreenOverlay.style.position = 'fixed';
+      fullscreenOverlay.style.zIndex = '4000';
+      fullscreenOverlay.style.left = '0';
+      fullscreenOverlay.style.top = '0';
+      fullscreenOverlay.style.width = '100vw';
+      fullscreenOverlay.style.height = '100vh';
+      fullscreenOverlay.style.background = 'rgba(0,0,0,0.97)';
+      fullscreenOverlay.style.justifyContent = 'center';
+      fullscreenOverlay.style.alignItems = 'center';
+      fullscreenOverlay.style.overflow = 'hidden';
+      fullscreenOverlay.innerHTML = `
+        <span id="close-fullscreen-img-btn" style="position: absolute; top: 24px; right: 36px; font-size: 3rem; color: #fff; font-weight: bold; cursor: pointer; user-select: none; z-index:2; text-shadow:0 2px 8px #000;">&times;</span>
+        <img id="fullscreen-img" src="" alt="Fullscreen Image" style="max-width: 90vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 4px 32px rgba(0,0,0,0.5); background:#fff; display:block; margin:auto; cursor:grab; transition: box-shadow 0.2s;" />
+        <div id="fullscreen-img-title" style="position:absolute; bottom:32px; left:0; right:0; text-align:center; color:#fff; font-size:1.3rem; font-weight:600; text-shadow:0 2px 8px #000; pointer-events:none;"></div>
+      `;
+      document.body.appendChild(fullscreenOverlay);
+    }
+
+    function openProductModal(product) {
+      // Set up share button logic
+      var shareBtn = document.getElementById('modal-share-btn');
+      var shareIcon = '<span id="modal-share-icon" style="display:inline-block; width:22px; height:22px;"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="5.5" r="2.5" stroke="#e91e63" stroke-width="2.8" fill="#fff"/><circle cx="6" cy="12" r="2.5" stroke="#e91e63" stroke-width="2.8" fill="#fff"/><circle cx="18" cy="18.5" r="2.5" stroke="#e91e63" stroke-width="2.8" fill="#fff"/><line x1="7.7" y1="11.0" x2="16.3" y2="6.8" stroke="#e91e63" stroke-width="2.8"/><line x1="7.7" y1="13.0" x2="16.3" y2="17.2" stroke="#e91e63" stroke-width="2.8"/></svg></span>';
+      shareBtn.innerHTML = shareIcon;
+      shareBtn.onclick = function(e) {
+        e.stopPropagation();
+        var shareUrl = window.location.href;
+        var shareTitle = product.title + ' | Crafix';
+        if (navigator.share) {
+          navigator.share({ title: shareTitle, url: shareUrl }).catch(()=>{});
+        } else {
+          navigator.clipboard.writeText(shareUrl).then(()=>{
+            shareBtn.innerHTML = '<span style="display:inline-block; width:22px; height:22px;"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="11" stroke="#388e3c" stroke-width="2" fill="none"/><path d="M8 12.5l3 3 5-5" stroke="#388e3c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>';
+            setTimeout(()=>{
+              shareBtn.innerHTML = shareIcon;
+            }, 1400);
+          });
+        }
+      };
+      // Push state so back button closes modal only
+      let baseUrl = window.location.pathname;
+      let params = new URLSearchParams(window.location.search);
+      params.set('modal', 'earrings');
+      params.set('product', product.title);
+      const newUrl = params.toString() ? baseUrl + '?' + params.toString() : baseUrl;
+      window.history.pushState({crafixModal: true}, '', newUrl);
+      document.body.style.overflow = 'hidden';
+      if (!document.body.contains(productModal)) {
+        document.body.appendChild(productModal);
+      }
+      productModal.style.display = 'flex';
+      document.getElementById('modal-title').textContent = product.title;
+      const offerPercent = Math.round(((product.mrp - product.discountedPrice) / product.mrp) * 100);
+      document.getElementById('modal-price').innerHTML = `
+        <span style="font-size:1.4rem; color:#222; font-weight:700;">₹${product.discountedPrice}</span>
+        <span style="color:#888; font-size:1.1rem; text-decoration:line-through; margin-left:10px;">₹${product.mrp}</span>
+      `;
+      document.getElementById('modal-offer').innerHTML = `${offerPercent}% off`;
+      document.getElementById('modal-unit').innerHTML = `Unit Price: <b>₹${(product.discountedPrice / product.unitCount).toFixed(2)}</b> per count`;
+      document.getElementById('modal-desc').textContent = product.desc;
+      const modalImg = document.getElementById('modal-img');
+      modalImg.src = product.img;
+      modalImg.style.cursor = 'zoom-in';
+      modalImg.onclick = function(e) {
+        e.stopPropagation();
+        openFullscreenImageOverlay(product.img, product.title);
+      };
+      const buyBtn = document.getElementById('modal-buy-btn');
+      buyBtn.onclick = function(e) {
+        e.stopPropagation();
+        buyNow(product);
+      };
+      if(window.innerWidth < 600) {
+        document.getElementById('modal-content').style.flexDirection = 'column';
+        document.getElementById('modal-content').style.maxWidth = '98vw';
+      } else {
+        document.getElementById('modal-content').style.flexDirection = 'row';
+        document.getElementById('modal-content').style.maxWidth = '900px';
+      }
+    }
+
+    function openFullscreenImageOverlay(imgSrc, title) {
+      const overlay = document.getElementById('fullscreen-img-overlay');
+      const img = document.getElementById('fullscreen-img');
+      const titleDiv = document.getElementById('fullscreen-img-title');
+      img.src = imgSrc;
+      titleDiv.textContent = title || '';
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      img.style.transform = 'translate(0px,0px) scale(1)';
+      let scale = 1, originX = 0, originY = 0, lastX = 0, lastY = 0, isDragging = false, startX = 0, startY = 0;
+      img.onwheel = function(e) {
+        e.preventDefault();
+        const rect = img.getBoundingClientRect();
+        const offsetX = e.clientX - rect.left;
+        const offsetY = e.clientY - rect.top;
+        let delta = e.deltaY < 0 ? 1.15 : 0.87;
+        let newScale = scale * delta;
+        if (newScale < 1) newScale = 1;
+        if (newScale > 6) newScale = 6;
+        originX = (originX - offsetX) * (newScale / scale) + offsetX;
+        originY = (originY - offsetY) * (newScale / scale) + offsetY;
+        scale = newScale;
+        img.style.transform = `translate(${originX}px,${originY}px) scale(${scale})`;
+      };
+      img.onmousedown = function(e) {
+        if (scale === 1) return;
+        isDragging = true;
+        startX = e.clientX - originX;
+        startY = e.clientY - originY;
+        img.style.cursor = 'grabbing';
+        e.preventDefault();
+      };
+      document.onmousemove = function(e) {
+        if (!isDragging) return;
+        originX = e.clientX - startX;
+        originY = e.clientY - startY;
+        img.style.transform = `translate(${originX}px,${originY}px) scale(${scale})`;
+      };
+      document.onmouseup = function(e) {
+        if (isDragging) {
+          isDragging = false;
+          img.style.cursor = 'grab';
+        }
+      };
+      img.ondblclick = function(e) {
+        scale = 1;
+        originX = 0;
+        originY = 0;
+        img.style.transform = 'translate(0px,0px) scale(1)';
+      };
+      document.getElementById('close-fullscreen-img-btn').onclick = function(e) {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+        img.onwheel = null;
+        img.onmousedown = null;
+        document.onmousemove = null;
+        document.onmouseup = null;
+        img.ondblclick = null;
+      };
+      overlay.onclick = function(e) {
+        if (e.target === overlay) {
+          overlay.style.display = 'none';
+          document.body.style.overflow = '';
+          img.onwheel = null;
+          img.onmousedown = null;
+          document.onmousemove = null;
+          document.onmouseup = null;
+          img.ondblclick = null;
+        }
+      };
+    }
+
+    document.getElementById('close-modal-btn').onclick = function(e) {
+      productModal.style.display = 'none';
+      document.body.style.overflow = '';
+      if (window.history.state && window.history.state.crafixModal) {
+        if (window.location.search.includes('modal=earrings')) {
+          window.history.back();
+        } else {
+          let params = new URLSearchParams(window.location.search);
+          params.delete('modal');
+          params.delete('product');
+          let baseUrl = window.location.pathname;
+          let newUrl = params.toString() ? baseUrl + '?' + params.toString() : baseUrl;
+          window.history.replaceState({}, '', newUrl);
+        }
+      }
+    };
+    productModal.onclick = function(e) {
+      if (e.target === productModal) {
+        productModal.style.display = 'none';
+        document.body.style.overflow = '';
+        if (window.history.state && window.history.state.crafixModal) {
+          if (window.location.search.includes('modal=earrings')) {
+            window.history.back();
+          } else {
+            let params = new URLSearchParams(window.location.search);
+            params.delete('modal');
+            params.delete('product');
+            let baseUrl = window.location.pathname;
+            let newUrl = params.toString() ? baseUrl + '?' + params.toString() : baseUrl;
+            window.history.replaceState({}, '', newUrl);
+          }
+        }
+      }
+    };
+    window.addEventListener('popstate', function(e) {
+      if (productModal.style.display === 'flex' && (!window.history.state || !window.history.state.crafixModal)) {
+        productModal.style.display = 'none';
+        document.body.style.overflow = '';
+        if (window.location.search.includes('modal=earrings')) {
+          let params = new URLSearchParams(window.location.search);
+          params.delete('modal');
+          params.delete('product');
+          let baseUrl = window.location.pathname;
+          let newUrl = params.toString() ? baseUrl + '?' + params.toString() : baseUrl;
+          window.history.replaceState({}, '', newUrl);
+        }
+      }
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
       renderProducts();
-
-      // Zoom modal functionality for all zoomable images
-      const modal = document.createElement('div');
-      modal.style.display = 'none';
-      modal.style.position = 'fixed';
-      modal.style.zIndex = '1000';
-      modal.style.left = '0';
-      modal.style.top = '0';
-      modal.style.width = '100%';
-      modal.style.height = '100%';
-      modal.style.overflow = 'auto';
-      modal.style.backgroundColor = 'rgba(0,0,0,0.8)';
-      modal.style.justifyContent = 'center';
-      modal.style.alignItems = 'center';
-
-      const modalImg = document.createElement('img');
-      modalImg.style.maxWidth = '90%';
-      modalImg.style.maxHeight = '90%';
-      modalImg.style.margin = 'auto';
-      modalImg.style.display = 'block';
-      modalImg.style.borderRadius = '10px';
-      modal.appendChild(modalImg);
-
-      // Create close button
-      const closeButton = document.createElement('span');
-      closeButton.innerHTML = '&times;';
-      closeButton.style.position = 'absolute';
-      closeButton.style.top = '20px';
-      closeButton.style.right = '30px';
-      closeButton.style.color = 'white';
-      closeButton.style.fontSize = '40px';
-      closeButton.style.fontWeight = 'bold';
-      closeButton.style.cursor = 'pointer';
-      closeButton.style.userSelect = 'none';
-      closeButton.style.zIndex = '1001';
-      modal.appendChild(closeButton);
-
-      document.body.appendChild(modal);
-
-      const zoomableImages = document.querySelectorAll('.zoomable');
-      zoomableImages.forEach(img => {
-        img.style.cursor = 'pointer';
-        img.addEventListener('click', () => {
-          modal.style.display = 'flex';
-          modalImg.src = img.src;
-        });
-      });
-
-      closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-      });
-
-      // Prevent modal close when clicking on the image
-      modalImg.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-
-      // Clicking outside the image closes the modal
-      modal.addEventListener('click', () => {
-        modal.style.display = 'none';
-      });
+      if (localStorage.getItem('crafixEarringsModalOpen') === 'true') {
+        const prodStr = localStorage.getItem('crafixEarringsModalProduct');
+        if (prodStr) {
+          try {
+            const prod = JSON.parse(prodStr);
+            openProductModal(prod);
+          } catch (e) {}
+        }
+        localStorage.removeItem('crafixEarringsModalOpen');
+        localStorage.removeItem('crafixEarringsModalProduct');
+      }
     });
   </script>
 </body>

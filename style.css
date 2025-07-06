@@ -11,65 +11,7 @@ body {
   transition: background-color 0.4s, color 0.4s;
 }
 
-body.dark-mode {
-  background-color: #121212;
-  color: #eee;
-}
 
-#theme-modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  animation: fadeInModal 0.6s ease forwards;
-  opacity: 0;
-  background: rgba(18, 18, 18, 0.4);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-@keyframes fadeInModal {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-#theme-modal .modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 15px;
-  text-align: center;
-  max-width: 90%;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-}
-
-#theme-modal button {
-  padding: 10px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-#theme-modal .light-btn {
-  background: #FAD0C9;
-  color: #333;
-}
-
-#theme-modal .dark-btn {
-  background: #333;
-  color: white;
-}
 
 section {
   display: none;
@@ -206,10 +148,7 @@ header a:hover {
   transform: scale(1.1);
 }
 
-body.dark-mode .product {
-  background: #1f1f1f;
-  color: #fff;
-}
+
 
 @keyframes fadeInProduct {
   to {
